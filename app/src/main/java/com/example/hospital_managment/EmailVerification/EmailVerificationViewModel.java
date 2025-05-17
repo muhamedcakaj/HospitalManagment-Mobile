@@ -1,17 +1,20 @@
 package com.example.hospital_managment.EmailVerification;
 
+import android.util.Base64;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
+import org.json.JSONObject;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
-
-
 public class EmailVerificationViewModel extends ViewModel {
 
     private final MutableLiveData<String>emailVerifyResult = new MutableLiveData<>();
@@ -40,8 +43,7 @@ public class EmailVerificationViewModel extends ViewModel {
                     String token = authResponse.getToken();
                     String refreshToken = authResponse.getRefreshToken();
 
-                    emailVerifyResult.postValue("Success" + token);
-
+                    emailVerifyResult.postValue("Sucess" + getRoleFromToken(token));
                 } else {
                     emailVerifyResult.postValue("Verification failed: Code is wrong or has expired");
                 }
@@ -52,4 +54,19 @@ public class EmailVerificationViewModel extends ViewModel {
             }
         });
     }
+    public String getRoleFromToken(String token) {
+        try {
+            String[] parts = token.split("\\.");
+            if (parts.length < 2) return null;
+
+            String payload = new String(Base64.decode(parts[1], Base64.URL_SAFE));
+            JSONObject jsonObject = new JSONObject(payload);
+
+            return jsonObject.getString("role");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
+
