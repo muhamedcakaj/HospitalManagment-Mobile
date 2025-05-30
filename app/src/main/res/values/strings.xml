@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Hospital-Managment</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_doctor_dashboard">DoctorDashboard</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_activity_create_diagnoses_view">CreateDiagnosesView</string>
+    <string name="login">Login</string>
+    <string name="welcome">Welcome</string>
+    <string name="access_patient_records_manage_appointments_and_streamline_hospital_operations_all_in_one_secure_easy_to_use_app_designed_for_doctors_staff_and_administrators_our_platform_ensures_seamless_coordination_real_time_updates_and_enhanced_patient_care">Access patient records, manage appointments, and streamline hospital operations—all in one secure, easy-to-use app. Designed for doctors, staff, and administrators, our platform ensures seamless coordination, real-time updates, and enhanced patient care.</string>
+    <string name="register">Register</string>
 </resources>

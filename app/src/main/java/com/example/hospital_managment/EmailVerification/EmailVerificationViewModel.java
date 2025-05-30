@@ -25,7 +25,7 @@ public class EmailVerificationViewModel extends ViewModel {
 
     public void emailVerify(String email,String code){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.0.102:8085/")
+                .baseUrl("http://10.0.2.2:8085/")
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -42,8 +42,10 @@ public class EmailVerificationViewModel extends ViewModel {
 
                     String token = authResponse.getToken();
                     String refreshToken = authResponse.getRefreshToken();
+                    String role = getRoleFromToken(token);
 
-                    emailVerifyResult.postValue("Sucess" + getRoleFromToken(token));
+                    emailVerifyResult.postValue(role);
+
                 } else {
                     emailVerifyResult.postValue("Verification failed: Code is wrong or has expired");
                 }

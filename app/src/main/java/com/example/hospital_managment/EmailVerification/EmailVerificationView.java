@@ -1,6 +1,7 @@
 package com.example.hospital_managment.EmailVerification;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +13,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.hospital_managment.DoctorDashboard.DoctorDashboard;
 import com.example.hospital_managment.R;
 
 public class EmailVerificationView extends AppCompatActivity {
@@ -54,6 +56,10 @@ public class EmailVerificationView extends AppCompatActivity {
         }
     }
     public void showMessage(String title,String message){
+        if(message.equals("Doctor")){
+            Intent intent = new Intent(this, DoctorDashboard.class);
+            startActivity(intent);
+        }
         new AlertDialog.Builder(this)
                 .setTitle(title)
                 .setMessage(message)

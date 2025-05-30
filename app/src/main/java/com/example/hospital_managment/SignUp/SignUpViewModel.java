@@ -25,7 +25,7 @@ public class SignUpViewModel extends ViewModel {
 
     public void singUpUser(String firstName, String lastName, String email, String password) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.0.102:8085/")
+                .baseUrl("http://10.0.2.2:8085/")
                 .addConverterFactory(ScalarsConverterFactory.create()) // 👈 this goes first!
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
