@@ -1,11 +1,14 @@
 package com.example.hospital_managment.EmailVerification;
 
+import android.content.Context;
 import android.util.Base64;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
+import com.example.hospital_managment.Token.TokenManager;
 
 import org.json.JSONObject;
 
@@ -23,7 +26,7 @@ public class EmailVerificationViewModel extends ViewModel {
         return emailVerifyResult;
     }
 
-    public void emailVerify(String email,String code){
+    public void emailVerify(String email, String code, Context context){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://10.0.2.2:8085/")
                 .addConverterFactory(ScalarsConverterFactory.create())
@@ -42,7 +45,12 @@ public class EmailVerificationViewModel extends ViewModel {
 
                     String token = authResponse.getToken();
                     String refreshToken = authResponse.getRefreshToken();
+                    TokenManager tokenManager = new TokenManager(context);
+                    tokenManager.saveTokens(token,refreshToken);
                     String role = getRoleFromToken(token);
+
+                    System.out.println("EmailToken "+token);
+                    System.out.println("EmailRefreshToken "+refreshToken);
 
                     emailVerifyResult.postValue(role);
 

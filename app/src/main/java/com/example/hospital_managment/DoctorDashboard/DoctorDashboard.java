@@ -1,63 +1,77 @@
 package com.example.hospital_managment.DoctorDashboard;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
+
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.hospital_managment.DoctorDashboard.Appointments.AppointmentsView;
 import com.example.hospital_managment.DoctorDashboard.Chat.ChatView;
+import com.example.hospital_managment.DoctorDashboard.CreateDiagnoses.CreateDiagnosesView;
 import com.example.hospital_managment.DoctorDashboard.Diagnoses.DiagnosesView;
 import com.example.hospital_managment.R;
 import com.example.hospital_managment.databinding.ActivityDoctorDashboardBinding;
 
 public class DoctorDashboard extends AppCompatActivity {
 
-    private ActivityDoctorDashboardBinding binding;
+    private com.example.hospital_managment.databinding.ActivityDoctorDashboardBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
 
-        // Use ViewBinding
         binding = ActivityDoctorDashboardBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Set up top bar
+        // Show system UI
+
+        // Set top app bar
         setSupportActionBar(binding.topAppBar);
 
-        // Handle profile icon click
+        // Top app bar menu click
         binding.topAppBar.setOnMenuItemClickListener(item -> {
             if (item.getItemId() == R.id.action_profile) {
-                // TODO: Navigate to Profile Fragment
                 Toast.makeText(this, "Profile Clicked", Toast.LENGTH_SHORT).show();
                 return true;
             }
             return false;
         });
 
-        // Set default fragment
+        // Load default fragment
+        if (savedInstanceState == null) {
+            loadFragment(new DiagnosesView());
+        }
 
-
-        // Handle bottom nav item selection
+        // Handle bottom navigation item clicks
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
-            Fragment selectedFragment;
-            int itemId = item.getItemId();
+            Fragment fragment;
+            int id = item.getItemId();
 
-            if (itemId == R.id.nav_diagnoses) {
-                selectedFragment = new DiagnosesView();
-            } else if (itemId == R.id.nav_appointments) {
-                selectedFragment = new AppointmentsView();
-            } else if (itemId == R.id.nav_chat) {
-                selectedFragment = new ChatView();
+            if (id == R.id.nav_create_diagnoses) {
+                fragment = new CreateDiagnosesView();
+            } else if (id == R.id.nav_appointments) {
+                fragment = new AppointmentsView();
+            } else if (id == R.id.nav_chat) {
+                fragment = new ChatView();
+            } else if (id == R.id.nav_diagnoses) {
+                fragment = new DiagnosesView();
             } else {
-                selectedFragment = new ChatView();
+                return false;
             }
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.nav_host_fragment, selectedFragment)
-                    .commit();
+
+            loadFragment(fragment);
             return true;
         });
+    }
+
+    private void loadFragment(Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.nav_host_fragment, fragment)
+                .commit();
     }
 }

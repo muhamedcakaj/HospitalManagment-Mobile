@@ -17,14 +17,14 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".DoctorDashboard.DoctorDashboard"
+            android:exported="false"
+            android:label="@string/title_activity_doctor_dashboard" />
+        <activity
             android:name=".DoctorDashboard.CreateDiagnoses.CreateDiagnosesView"
             android:exported="false"
             android:label="@string/title_activity_create_diagnoses_view"
             android:theme="@style/Theme.HospitalManagment" />
-        <activity
-            android:name=".DoctorDashboard.DoctorDashboard"
-            android:exported="false"
-            android:label="@string/title_activity_doctor_dashboard" />
         <activity
             android:name=".EmailVerification.EmailVerificationView"
             android:exported="false" />
@@ -33,7 +33,7 @@
             android:exported="false" />
         <activity
             android:name=".Login.LoginView"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

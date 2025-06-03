@@ -51,20 +51,19 @@ public class EmailVerificationView extends AppCompatActivity {
             showMessage("Error","Please fill the necessary fields");
         }else{
             String email = prefs.getString("email", null);
-            System.out.println(email + " : "+code);
-            verificationViewModel.emailVerify(email,code);
+            verificationViewModel.emailVerify(email,code,this);
         }
     }
     public void showMessage(String title,String message){
         if(message.equals("Doctor")){
             Intent intent = new Intent(this, DoctorDashboard.class);
             startActivity(intent);
+        }else {
+            new AlertDialog.Builder(this)
+                    .setTitle(title)
+                    .setMessage(message)
+                    .setCancelable(true)
+                    .show();
         }
-        new AlertDialog.Builder(this)
-                .setTitle(title)
-                .setMessage(message)
-                .setCancelable(true)
-                .show();
-
     }
 }
