@@ -1,10 +1,9 @@
-package com.example.hospital_managment.DoctorDashboard.Diagnoses;
+package com.example.hospital_managment.DoctorDashboard.Chat;
 
 import android.content.Context;
 import android.util.Base64;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -16,39 +15,45 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DiagnosesViewModel extends ViewModel {
+public class ChatViewModel extends ViewModel {
 
-    private final MutableLiveData<List<DiagnosesModel>> diagnoses = new MutableLiveData<>();
+    private final MutableLiveData<List<ChatModel>> chats = new MutableLiveData<>();
 
-    public LiveData<List<DiagnosesModel>> getDiagnoses() {
-        return diagnoses;
+    public MutableLiveData<List<ChatModel>>getChats(){
+        return chats;
     }
 
-    public void fetchDiagnoses(Context context) {
-        ApiService apiService = RetrofitInstance.getApiService(context);
+    public void fetchChats(Context context) {
+
+        ApiService apiservice = RetrofitInstance.getApiService(context);
 
         TokenManager tokenManager = new TokenManager(context);
-        int doctorId = Integer.parseInt(Objects.requireNonNull(getDoctorIdFromToken(tokenManager.getAccessToken())));
-        apiService.getDoctorDiagnoses(doctorId).enqueue(new Callback<>() {
+
+        int userId = Integer.parseInt(getDoctorIdFromToken(tokenManager.getAccessToken()));
+
+        apiservice.getChats(userId).enqueue(new Callback<>() {
             @Override
-            public void onResponse(@NonNull Call<List<DiagnosesModel>> call, @NonNull Response<List<DiagnosesModel>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    diagnoses.postValue(response.body());
+            public void onResponse(@NonNull Call<List<ChatModel>> call, @NonNull Response<List<ChatModel>> response) {
+                if(response.isSuccessful()){
+                    chats.postValue(response.body());
+                }else{
+                    chats.postValue(new ArrayList<>());
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<List<DiagnosesModel>> call, @NonNull Throwable t) {
-                diagnoses.postValue(new ArrayList<>());
+            public void onFailure(@NonNull Call<List<ChatModel>> call, @NonNull Throwable t) {
+                chats.postValue(new ArrayList<>());
+
             }
         });
     }
+
     public static String getDoctorIdFromToken(String token) {
         try {
             String[] parts = token.split("\\."); // Header, Payload, Signature
@@ -69,3 +74,4 @@ public class DiagnosesViewModel extends ViewModel {
         }
     }
 }
+

@@ -3,12 +3,17 @@ package com.example.hospital_managment.DoctorDashboard.Chat;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.hospital_managment.R;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -57,10 +62,30 @@ public class ChatView extends Fragment {
         }
     }
 
+    private ChatViewModel chatViewModel;
+    private RecyclerView recyclerView;
+    private ChatAdapter chatAdapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_chat_view, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_chat_view, container, false);
+
+        chatViewModel = new ViewModelProvider(this).get(ChatViewModel.class);
+
+        recyclerView = view.findViewById(R.id.recyclerViewChat);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+
+        recyclerView.setAdapter(chatAdapter);
+
+        chatViewModel.getChats().observe(getViewLifecycleOwner(), diagnoses -> {
+            chatAdapter.updateList(diagnoses);
+        });
+
+        chatViewModel.fetchChats(requireContext());
+
+        return view;
     }
 }

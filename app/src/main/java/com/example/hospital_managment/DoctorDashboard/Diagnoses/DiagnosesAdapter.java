@@ -46,18 +46,18 @@ public class DiagnosesAdapter extends RecyclerView.Adapter<DiagnosesAdapter.View
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         DiagnosesModel diagnosis = diagnosesList.get(position);
-        holder.name.setText("Doctor ID: " + diagnosis.getUserId()); // Replace with actual doctor name if available
+        holder.name.setText("Doctor ID: " + diagnosis.getUserId());
         holder.description.setText(diagnosis.getDiagnosis());
 
-        // Format LocalDateTime to date and time separately
+
         String dt = diagnosis.getDiagnosis_date();
         String[]split=dt.split("T");
         holder.date.setText(split[0]);
         String[]split2=split[1].split(":");
         holder.time.setText(split2[0]+":"+split2[1]);
 
-        // Optional: set icon if needed
-        holder.icon.setImageResource(R.drawable.diagnose_list); // Make sure this drawable exists
+
+        holder.icon.setImageResource(R.drawable.diagnose_list);
     }
 
     @Override

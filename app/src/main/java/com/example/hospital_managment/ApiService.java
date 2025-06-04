@@ -1,5 +1,6 @@
 package com.example.hospital_managment;
 
+import com.example.hospital_managment.DoctorDashboard.Chat.ChatModel;
 import com.example.hospital_managment.DoctorDashboard.CreateDiagnoses.CreateDiagnosesModel;
 import com.example.hospital_managment.DoctorDashboard.Diagnoses.DiagnosesModel;
 import com.example.hospital_managment.EmailVerification.AuthResponseDTO;
@@ -36,5 +37,8 @@ public interface ApiService {
 
     @GET("diagnosis/doctor/{id}")
     Call<List<DiagnosesModel>> getDoctorDiagnoses(@Path("id") int doctorId);
+
+    @GET("chat/conversations/{userId}")
+    Call<List<ChatModel>> getChats(@Path("userId") int userId);
 
 }
