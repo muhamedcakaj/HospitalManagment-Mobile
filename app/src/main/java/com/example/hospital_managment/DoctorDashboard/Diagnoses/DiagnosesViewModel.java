@@ -1,4 +1,4 @@
-package com.example.hospital_managment.DoctorDashboard.CreateDiagnoses;
+package com.example.hospital_managment.DoctorDashboard.Diagnoses;
 
 import android.content.Context;
 import android.util.Base64;
@@ -14,38 +14,39 @@ import com.example.hospital_managment.Token.TokenManager;
 
 import org.json.JSONObject;
 
-import okhttp3.ResponseBody;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CreateDiagnosesViewModel extends ViewModel {
-    private final MutableLiveData<String> createDiagnosesResult = new MutableLiveData<>();
+public class DiagnosesViewModel extends ViewModel {
 
-    public LiveData<String> getDiagnosesResult() {
-        return createDiagnosesResult;
+    private final MutableLiveData<List<DiagnosesModel>> diagnoses = new MutableLiveData<>();
+
+    public LiveData<List<DiagnosesModel>> getDiagnoses() {
+        return diagnoses;
     }
 
-    public void createDiagnosis(Context context, String email, String diagnosis) {
-        TokenManager tokenManager = new TokenManager(context);
-        int doctorId = Integer.parseInt(getDoctorIdFromToken(tokenManager.getAccessToken()));
-
-        CreateDiagnosesModel model = new CreateDiagnosesModel(doctorId, email, diagnosis);
+    public void fetchDiagnoses(Context context) {
+        System.out.println("VIEWMODEL");
         ApiService apiService = RetrofitInstance.getApiService(context);
 
-        apiService.createDiagnoses(model).enqueue(new Callback<>() {
+        TokenManager tokenManager = new TokenManager(context);
+        int doctorId = Integer.parseInt(Objects.requireNonNull(getDoctorIdFromToken(tokenManager.getAccessToken())));
+        apiService.getDoctorDiagnoses(doctorId).enqueue(new Callback<>() {
             @Override
-            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
-                if(response.isSuccessful()){
-                    createDiagnosesResult.postValue("Diagnose has been submitted successfully");
-                }else{
-                    createDiagnosesResult.postValue("Enter a valid email address");
+            public void onResponse(@NonNull Call<List<DiagnosesModel>> call, @NonNull Response<List<DiagnosesModel>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    diagnoses.postValue(response.body());
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                createDiagnosesResult.postValue("The system is down try again later");
+            public void onFailure(@NonNull Call<List<DiagnosesModel>> call, @NonNull Throwable t) {
+                diagnoses.postValue(new ArrayList<>());
             }
         });
     }

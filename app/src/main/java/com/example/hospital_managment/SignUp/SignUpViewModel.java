@@ -5,6 +5,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.hospital_managment.ApiService;
+
 import java.io.IOException;
 
 import okhttp3.ResponseBody;
@@ -30,7 +32,7 @@ public class SignUpViewModel extends ViewModel {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        com.example.hospital_managment.SignUp.ApiService apiService = retrofit.create(ApiService.class);
+        ApiService apiService = retrofit.create(ApiService.class);
         SignUpModel signUpModel = new SignUpModel(firstName, lastName, email, password);
 
         apiService.signUp(signUpModel).enqueue(new Callback<>() {

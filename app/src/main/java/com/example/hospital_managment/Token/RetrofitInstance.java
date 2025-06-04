@@ -2,7 +2,7 @@ package com.example.hospital_managment.Token;
 
 import android.content.Context;
 
-import com.example.hospital_managment.DoctorDashboard.CreateDiagnoses.ApiService;
+import com.example.hospital_managment.ApiService;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;

@@ -1,6 +1,6 @@
 package com.example.hospital_managment.Token;
 
-import com.example.hospital_managment.Token.RefreshToken.RefreshApi;
+import com.example.hospital_managment.ApiService;
 import com.example.hospital_managment.Token.RefreshToken.RefreshRequest;
 import com.example.hospital_managment.Token.RefreshToken.TokenResponse;
 
@@ -29,7 +29,7 @@ public class TokenAuthenticator implements Authenticator {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        RefreshApi refreshApi = retrofit.create(RefreshApi.class);
+        ApiService refreshApi = retrofit.create(ApiService.class);
         RefreshRequest refreshRequest = new RefreshRequest(tokenManager.getRefreshToken());
 
         retrofit2.Response<TokenResponse> refreshResponse = refreshApi.refreshToken(refreshRequest).execute();

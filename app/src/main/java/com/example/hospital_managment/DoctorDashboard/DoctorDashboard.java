@@ -1,7 +1,6 @@
 package com.example.hospital_managment.DoctorDashboard;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -43,7 +42,7 @@ public class DoctorDashboard extends AppCompatActivity {
 
         // Load default fragment
         if (savedInstanceState == null) {
-            loadFragment(new DiagnosesView());
+            loadFragment(new CreateDiagnosesView());
         }
 
         // Handle bottom navigation item clicks
