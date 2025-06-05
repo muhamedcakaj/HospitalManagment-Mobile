@@ -1,5 +1,6 @@
 package com.example.hospital_managment.DoctorDashboard.Chat.Message;
 
+
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,8 +11,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
 
-import com.example.hospital_managment.DoctorDashboard.Chat.ChatViewModel;
+
 import com.example.hospital_managment.R;
 
 import java.util.ArrayList;
@@ -55,6 +58,7 @@ public class MessageView extends Fragment {
     }
 
     String patientId;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,21 +68,28 @@ public class MessageView extends Fragment {
             patientId = getArguments().getString("chatId");
         }
     }
+
     private RecyclerView recyclerView;
     private MessageViewModel messageViewModel;
     private MessageAdapter messageAdapter;
+
+    private ImageView sentMessageIcon;
+
+    private EditText sentMessageEditText;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_message_view, container, false);
+        sentMessageIcon=view.findViewById(R.id.sentMessageIcon);
+        sentMessageEditText=view.findViewById(R.id.sentMessageEditText);
 
-        messageViewModel=new ViewModelProvider(this).get(MessageViewModel.class);
+        messageViewModel = new ViewModelProvider(this).get(MessageViewModel.class);
 
         recyclerView = view.findViewById(R.id.recyclerViewChat);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        messageAdapter=new MessageAdapter(new ArrayList<>(),requireContext());
+        messageAdapter = new MessageAdapter(new ArrayList<>(), requireContext());
 
         recyclerView.setAdapter(messageAdapter);
 
@@ -86,8 +97,15 @@ public class MessageView extends Fragment {
             messageAdapter.updateList(diagnoses);
         });
 
-        messageViewModel.fetchMessage(requireContext(),patientId);
+        messageViewModel.fetchMessage(requireContext(), patientId);
 
+        sentMessageIcon.setOnClickListener(v -> {
+            String messageText = sentMessageEditText.getText().toString().trim();
+            if (!messageText.isEmpty()) {
+                messageViewModel.sendMessage(requireContext(), patientId, messageText);
+                sentMessageEditText.setText("");
+            }
+        });
         return view;
     }
 }

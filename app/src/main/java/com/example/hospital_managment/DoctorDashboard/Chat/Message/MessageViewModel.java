@@ -1,6 +1,7 @@
 package com.example.hospital_managment.DoctorDashboard.Chat.Message;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
@@ -10,12 +11,20 @@ import com.example.hospital_managment.ApiService;
 import com.example.hospital_managment.DoctorDashboard.GetDoctorIdFromToken;
 import com.example.hospital_managment.Token.RetrofitInstance;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.WebSocket;
+import okhttp3.WebSocketListener;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import java.time.LocalDateTime;
 
 public class MessageViewModel extends ViewModel {
 
@@ -24,7 +33,8 @@ public class MessageViewModel extends ViewModel {
     public MutableLiveData<List<MessageModel>>getMessage(){
         return message;
     }
-
+    private final OkHttpClient client = new OkHttpClient();
+    private WebSocket webSocket;
     public void fetchMessage(Context context,String patientId){
         System.out.println(patientId);
         ApiService apiService= RetrofitInstance.getApiService(context);
@@ -36,7 +46,6 @@ public class MessageViewModel extends ViewModel {
             @Override
             public void onResponse(@NonNull Call<List<MessageModel>> call,@NonNull Response<List<MessageModel>> response) {
                 if(response.isSuccessful()){
-                    System.out.println(response.body().get(1).getContent());
                     message.postValue(response.body());
                 }else{
                     message.postValue(new ArrayList<>());
@@ -47,5 +56,63 @@ public class MessageViewModel extends ViewModel {
                 message.postValue(new ArrayList<>());
             }
         });
+    }
+    /// /////////////////////////////////////////////////////////////////
+    public void sendMessage(Context context, String receiverId, String content) {
+        String senderId = String.valueOf(new GetDoctorIdFromToken().getDoctorId(context));
+
+        // 1. Create and add the message immediately to LiveData
+        List<MessageModel> currentMessages = message.getValue();
+        if (currentMessages == null) {
+            currentMessages = new ArrayList<>();
+        }
+
+        MessageModel newMessage = new MessageModel();
+        newMessage.setSenderId(senderId);
+        newMessage.setReceiverId(receiverId);
+        newMessage.setContent(content);
+        newMessage.setTimestamp(String.valueOf(LocalDateTime.now()));
+
+        currentMessages.add(newMessage);
+        message.postValue(currentMessages);
+
+        connectWebSocket(senderId, receiverId, content);
+    }
+
+    private void connectWebSocket(String senderId, String receiverId, String content) {
+        Request request = new Request.Builder()
+                .url("ws://10.0.2.2:8087/ws/chat?userId=" + senderId) // replace IP if real device
+                .build();
+
+        webSocket = client.newWebSocket(request, new WebSocketListener() {
+            @Override
+            public void onOpen(WebSocket webSocket, okhttp3.Response response) {
+                try {
+                    JSONObject messageJson = new JSONObject();
+                    messageJson.put("senderId", senderId);
+                    messageJson.put("receiverId", receiverId);
+                    messageJson.put("content", content);
+
+                    webSocket.send(messageJson.toString());
+                    webSocket.close(1000, null);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(WebSocket webSocket, Throwable t, okhttp3.Response response) {
+                Log.e("WebSocket", "Connection failed: " + t.getMessage());
+            }
+        });
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        if (webSocket != null) {
+            webSocket.cancel();
+        }
+        client.dispatcher().executorService().shutdown();
     }
 }

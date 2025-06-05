@@ -44,7 +44,7 @@
         android:paddingBottom="12dp">
 
         <EditText
-            android:id="@+id/editTextTextMultiLine"
+            android:id="@+id/sentMessageEditText"
             android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:background="@drawable/edit_text_background"
