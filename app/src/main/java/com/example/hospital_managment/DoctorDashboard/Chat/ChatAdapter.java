@@ -81,8 +81,12 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         }
 
         holder.itemView.setOnClickListener(v -> {
+            String patientId = chat.getUserId1().equals(doctorId)
+                    ? chat.getUserId2()
+                    : chat.getUserId1();
+
             Bundle bundle = new Bundle();
-            bundle.putString("chatId", chat.getId());
+            bundle.putString("chatId",patientId);
 
             MessageView messageFragment = new MessageView();
             messageFragment.setArguments(bundle);
@@ -96,7 +100,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                     .commit();
         });
 
-        holder.image.setImageResource(R.drawable.message_icon);
+        holder.image.setImageResource(R.drawable.chat_icon);
     }
 
     @Override

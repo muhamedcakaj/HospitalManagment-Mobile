@@ -57,6 +57,8 @@ public class MessageView extends Fragment {
         }
     }
 
+    private String patientId;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

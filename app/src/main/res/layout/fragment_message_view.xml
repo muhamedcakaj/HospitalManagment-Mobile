@@ -32,6 +32,13 @@
             android:layout_weight="0"
             tools:ignore="SpeakableTextPresentCheck" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="8dp">
+
         <EditText
             android:id="@+id/editTextTextMultiLine"
             android:layout_width="320dp"
@@ -48,10 +55,12 @@
             android:translationZ="4dp" />
 
         <ImageView
-            android:id="@+id/imageView6"
+            android:id="@+id/sentMessageIcon"
             android:layout_width="61dp"
             android:layout_height="61dp"
             android:src="@drawable/message_icon" />
+    </LinearLayout>
+
 
     </LinearLayout>
 
