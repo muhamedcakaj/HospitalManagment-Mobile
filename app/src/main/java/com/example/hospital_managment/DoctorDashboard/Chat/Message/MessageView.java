@@ -3,12 +3,18 @@ package com.example.hospital_managment.DoctorDashboard.Chat.Message;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.hospital_managment.DoctorDashboard.Chat.ChatViewModel;
 import com.example.hospital_managment.R;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -48,21 +54,40 @@ public class MessageView extends Fragment {
         return fragment;
     }
 
+    String patientId;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+            patientId = getArguments().getString("patientId");
         }
     }
-
-    private String patientId;
+    private RecyclerView recyclerView;
+    private MessageViewModel messageViewModel;
+    private MessageAdapter messageAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_message_view, container, false);
+        View view = inflater.inflate(R.layout.fragment_message_view, container, false);
+
+        messageViewModel=new ViewModelProvider(this).get(MessageViewModel.class);
+
+        recyclerView = view.findViewById(R.id.recyclerViewChat);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        messageAdapter=new MessageAdapter(new ArrayList<>(),requireContext());
+
+        recyclerView.setAdapter(messageAdapter);
+
+        messageViewModel.getMessage().observe(getViewLifecycleOwner(), diagnoses -> {
+            messageAdapter.updateList(diagnoses);
+        });
+
+        messageViewModel.fetchMessage(requireContext(),patientId);
+
+        return view;
     }
 }

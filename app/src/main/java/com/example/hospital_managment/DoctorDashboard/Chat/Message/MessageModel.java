@@ -1,7 +1,5 @@
 package com.example.hospital_managment.DoctorDashboard.Chat.Message;
 
-import java.time.LocalDateTime;
-
 public class MessageModel {
     private String id;
     private String senderId;
