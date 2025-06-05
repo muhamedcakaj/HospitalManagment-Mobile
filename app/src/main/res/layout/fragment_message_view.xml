@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,25 +15,44 @@
         android:padding="8dp"
         tools:context=".DoctorDashboard.Diagnoses.DiagnosesView">
 
-        <!-- Title TextView -->
-
-        <!-- RecyclerView for Diagnoses -->
         <TextView
             android:id="@+id/textViewTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:fontFamily="@font/gayathri_bold"
-            android:text="Select a conversation to start chatting"
+            android:text="Chat"
             android:textSize="20sp"
             android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewChat"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="700dp"
+            android:layout_weight="0"
             tools:ignore="SpeakableTextPresentCheck" />
+
+        <EditText
+            android:id="@+id/editTextTextMultiLine"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_background"
+            android:elevation="4dp"
+            android:ems="10"
+            android:fontFamily="@font/gayathri_thin"
+            android:gravity="start|top"
+            android:hint="Type a message...."
+            android:inputType="textMultiLine"
+            android:padding="12dp"
+            android:textColorHint="#757575"
+            android:translationZ="4dp" />
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="61dp"
+            android:layout_height="61dp"
+            android:src="@drawable/message_icon" />
+
     </LinearLayout>
 
 </FrameLayout>

@@ -12,9 +12,11 @@ import android.widget.TextView;
 import android.graphics.Color;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.example.hospital_managment.DoctorDashboard.Chat.Message.MessageView;
 import com.example.hospital_managment.DoctorDashboard.GetDoctorIdFromToken;
 import com.example.hospital_managment.R;
 
@@ -77,20 +79,23 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
             holder.chatItemLayout.setBackgroundColor(Color.parseColor("#ADD8E6"));
             holder.chatStatus.setBackgroundColor(Color.parseColor("#ADD8E6"));
         }
+
         holder.itemView.setOnClickListener(v -> {
             Bundle bundle = new Bundle();
-            bundle.putString("chatId",chat.getId()); // or any other data you want to pass
+            bundle.putString("chatId", chat.getId());
 
-            MessageFragment messageFragment = new MessageFragment();
+            MessageView messageFragment = new MessageView();
             messageFragment.setArguments(bundle);
 
-            requireActivity()
-                    .getSupportFragmentManager()
+            AppCompatActivity activity = (AppCompatActivity) context;
+
+            activity.getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragment_container, messageFragment)
+                    .replace(R.id.linearChat, messageFragment)
                     .addToBackStack(null)
                     .commit();
         });
+
         holder.image.setImageResource(R.drawable.message_icon);
     }
 
