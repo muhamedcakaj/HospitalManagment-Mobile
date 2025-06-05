@@ -26,6 +26,7 @@ public class MessageViewModel extends ViewModel {
     }
 
     public void fetchMessage(Context context,String patientId){
+        System.out.println(patientId);
         ApiService apiService= RetrofitInstance.getApiService(context);
 
         GetDoctorIdFromToken getDoctorIdFromToken = new GetDoctorIdFromToken();
@@ -35,6 +36,7 @@ public class MessageViewModel extends ViewModel {
             @Override
             public void onResponse(@NonNull Call<List<MessageModel>> call,@NonNull Response<List<MessageModel>> response) {
                 if(response.isSuccessful()){
+                    System.out.println(response.body().get(1).getContent());
                     message.postValue(response.body());
                 }else{
                     message.postValue(new ArrayList<>());

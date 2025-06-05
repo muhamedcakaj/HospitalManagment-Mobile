@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".DoctorDashboard.Diagnoses.DiagnosesView">
 
     <!-- TODO: Update blank fragment layout -->
@@ -13,7 +14,8 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="8dp"
-        tools:context=".DoctorDashboard.Diagnoses.DiagnosesView">
+        tools:context=".DoctorDashboard.Diagnoses.DiagnosesView"
+        tools:ignore="UselessParent">
 
         <TextView
             android:id="@+id/textViewTitle"
@@ -23,21 +25,23 @@
             android:fontFamily="@font/gayathri_bold"
             android:text="Chat"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:ignore="HardcodedText" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewChat"
             android:layout_width="match_parent"
-            android:layout_height="700dp"
-            android:layout_weight="0"
-            tools:ignore="SpeakableTextPresentCheck" />
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:paddingBottom="80dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:layout_marginTop="8dp">
+        android:layout_marginTop="8dp"
+        android:paddingBottom="12dp">
 
         <EditText
             android:id="@+id/editTextTextMultiLine"
@@ -49,6 +53,7 @@
             android:fontFamily="@font/gayathri_thin"
             android:gravity="start|top"
             android:hint="Type a message...."
+            android:importantForAccessibility="no"
             android:inputType="textMultiLine"
             android:padding="12dp"
             android:textColorHint="#757575"
@@ -58,7 +63,8 @@
             android:id="@+id/sentMessageIcon"
             android:layout_width="61dp"
             android:layout_height="61dp"
-            android:src="@drawable/message_icon" />
+            android:src="@drawable/message_icon"
+            tools:ignore="ContentDescription,VisualLintBounds" />
     </LinearLayout>
 
 

@@ -42,7 +42,7 @@ public interface ApiService {
     @GET("chat/conversations/{userId}")
     Call<List<ChatModel>> getChats(@Path("userId") int userId);
 
-    @GET("/messages/{user1}/{user2}")
+    @GET("chat/messages/{user1}/{user2}")
     Call<List<MessageModel>> getMessage(@Path("user1")String user1,@Path("user2")String user2);
 
 }
