@@ -1,62 +1,62 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     tools:context=".DoctorDashboard.Diagnoses.DiagnosesView">
 
-    <!-- TODO: Update blank fragment layout -->
-    <LinearLayout
-        android:id="@+id/linearChat"
+
+    <TextView
+        android:id="@+id/textViewTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_margin="8dp"
+        android:fontFamily="@font/gayathri_bold"
+        android:text="Chat"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewChat"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:layout_height="0dp"
+        android:layout_above="@+id/chatInputLayout"
+        android:layout_below="@id/textViewTitle"
+        android:layout_marginTop="4dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:overScrollMode="always"
         android:padding="8dp"
-        tools:context=".DoctorDashboard.Diagnoses.DiagnosesView"
-        tools:ignore="UselessParent">
+        android:scrollbars="vertical"
+        tools:ignore="SpeakableTextPresentCheck" />
 
-        <TextView
-            android:id="@+id/textViewTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:fontFamily="@font/gayathri_bold"
-            android:text="Chat"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            tools:ignore="HardcodedText" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewChat"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:paddingBottom="80dp" />
 
     <LinearLayout
+        android:id="@+id/chatInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:layout_marginTop="8dp"
-        android:paddingBottom="12dp">
+        android:padding="8dp"
+        android:background="#FFFFFF">
 
         <EditText
             android:id="@+id/sentMessageEditText"
-            android:layout_width="320dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/edit_text_background"
-            android:elevation="4dp"
-            android:ems="10"
-            android:fontFamily="@font/gayathri_thin"
-            android:gravity="start|top"
+            android:layout_weight="1"
             android:hint="Type a message...."
-            android:importantForAccessibility="no"
+            android:fontFamily="@font/gayathri_thin"
+            android:background="@drawable/edit_text_background"
             android:inputType="textMultiLine"
+            android:maxLines="5"
+            android:minLines="1"
             android:padding="12dp"
+            android:gravity="start|top"
             android:textColorHint="#757575"
+            android:elevation="4dp"
             android:translationZ="4dp" />
 
         <ImageView
@@ -64,10 +64,9 @@
             android:layout_width="61dp"
             android:layout_height="61dp"
             android:src="@drawable/message_icon"
-            tools:ignore="ContentDescription,VisualLintBounds" />
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="4dp"
+            tools:ignore="ContentDescription" />
     </LinearLayout>
 
-
-    </LinearLayout>
-
-</FrameLayout>
+</RelativeLayout>

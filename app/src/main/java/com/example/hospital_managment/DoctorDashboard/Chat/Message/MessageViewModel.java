@@ -35,6 +35,7 @@ public class MessageViewModel extends ViewModel {
     }
     private final OkHttpClient client = new OkHttpClient();
     private WebSocket webSocket;
+    private boolean isConnected = false;
     public void fetchMessage(Context context,String patientId){
         System.out.println(patientId);
         ApiService apiService= RetrofitInstance.getApiService(context);
@@ -58,7 +59,7 @@ public class MessageViewModel extends ViewModel {
         });
     }
     /// /////////////////////////////////////////////////////////////////
-    public void sendMessage(String receiverId,String content,Context context) {
+    public void sendMessage(String receiverId, String content, Context context) {
         GetDoctorIdFromToken getDoctorIdFromToken = new GetDoctorIdFromToken();
         String senderId = String.valueOf(getDoctorIdFromToken.getDoctorId(context));
         try {
@@ -79,10 +80,11 @@ public class MessageViewModel extends ViewModel {
             newMessage.setTimestamp(String.valueOf(LocalDateTime.now()));
 
             currentMessages.add(newMessage);
-
             message.postValue(currentMessages);
 
-            webSocket.send(messageJson.toString());
+            if (webSocket != null) {
+                webSocket.send(messageJson.toString());
+            }
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -90,13 +92,19 @@ public class MessageViewModel extends ViewModel {
     }
 
     public void connectWebSocket(Context context) {
-        String userId = String.valueOf(new GetDoctorIdFromToken().getDoctorId(context));
+        if (isConnected) return;
 
+        String userId = String.valueOf(new GetDoctorIdFromToken().getDoctorId(context));
         Request request = new Request.Builder()
                 .url("ws://10.0.2.2:8087/ws/chat?userId=" + userId)
                 .build();
 
         webSocket = client.newWebSocket(request, new WebSocketListener() {
+            @Override
+            public void onOpen(@NonNull WebSocket webSocket, @NonNull okhttp3.Response response) {
+                isConnected = true;
+            }
+
             @Override
             public void onMessage(@NonNull WebSocket webSocket, @NonNull String text) {
                 try {
@@ -120,6 +128,13 @@ public class MessageViewModel extends ViewModel {
             @Override
             public void onFailure(@NonNull WebSocket webSocket, @NonNull Throwable t, okhttp3.Response response) {
                 Log.e("WebSocket", "Failed: " + t.getMessage());
+                isConnected = false;
+            }
+
+            @Override
+            public void onClosed(@NonNull WebSocket webSocket, int code, @NonNull String reason) {
+                super.onClosed(webSocket, code, reason);
+                isConnected = false;
             }
         });
     }
@@ -130,6 +145,7 @@ public class MessageViewModel extends ViewModel {
         if (webSocket != null) {
             webSocket.cancel();
         }
+        isConnected = false;
         client.dispatcher().executorService().shutdown();
     }
 }

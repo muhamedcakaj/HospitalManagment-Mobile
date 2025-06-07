@@ -77,24 +77,28 @@ public class MessageView extends Fragment {
 
     private EditText sentMessageEditText;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_message_view, container, false);
-        sentMessageIcon=view.findViewById(R.id.sentMessageIcon);
-        sentMessageEditText=view.findViewById(R.id.sentMessageEditText);
+
+        sentMessageIcon = view.findViewById(R.id.sentMessageIcon);
+        sentMessageEditText = view.findViewById(R.id.sentMessageEditText);
 
         messageViewModel = new ViewModelProvider(this).get(MessageViewModel.class);
 
         recyclerView = view.findViewById(R.id.recyclerViewChat);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
         messageAdapter = new MessageAdapter(new ArrayList<>(), requireContext());
-
         recyclerView.setAdapter(messageAdapter);
 
-        messageViewModel.getMessage().observe(getViewLifecycleOwner(), diagnoses -> {
-            messageAdapter.updateList(diagnoses);
+
+        messageViewModel.connectWebSocket(requireContext());
+
+        messageViewModel.getMessage().observe(getViewLifecycleOwner(), messages -> {
+            messageAdapter.updateList(messages);
+            recyclerView.smoothScrollToPosition(messageAdapter.getItemCount() - 1);
         });
 
         messageViewModel.fetchMessage(requireContext(), patientId);
@@ -102,13 +106,11 @@ public class MessageView extends Fragment {
         sentMessageIcon.setOnClickListener(v -> {
             String messageText = sentMessageEditText.getText().toString().trim();
             if (!messageText.isEmpty()) {
-                messageViewModel.connectWebSocket(requireContext());
-                messageViewModel.sendMessage(patientId,messageText,requireContext());
-
-
+                messageViewModel.sendMessage(patientId, messageText, requireContext());
                 sentMessageEditText.setText("");
             }
         });
+
         return view;
     }
 }
