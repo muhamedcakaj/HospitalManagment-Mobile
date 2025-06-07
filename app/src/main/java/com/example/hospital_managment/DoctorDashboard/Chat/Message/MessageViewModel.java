@@ -58,51 +58,68 @@ public class MessageViewModel extends ViewModel {
         });
     }
     /// /////////////////////////////////////////////////////////////////
-    public void sendMessage(Context context, String receiverId, String content) {
-        String senderId = String.valueOf(new GetDoctorIdFromToken().getDoctorId(context));
+    public void sendMessage(String receiverId,String content,Context context) {
+        GetDoctorIdFromToken getDoctorIdFromToken = new GetDoctorIdFromToken();
+        String senderId = String.valueOf(getDoctorIdFromToken.getDoctorId(context));
+        try {
+            JSONObject messageJson = new JSONObject();
+            messageJson.put("senderId", senderId);
+            messageJson.put("receiverId", receiverId);
+            messageJson.put("content", content);
 
-        // 1. Create and add the message immediately to LiveData
-        List<MessageModel> currentMessages = message.getValue();
-        if (currentMessages == null) {
-            currentMessages = new ArrayList<>();
+            List<MessageModel> currentMessages = message.getValue();
+            if (currentMessages == null) {
+                currentMessages = new ArrayList<>();
+            }
+
+            MessageModel newMessage = new MessageModel();
+            newMessage.setSenderId(senderId);
+            newMessage.setReceiverId(receiverId);
+            newMessage.setContent(content);
+            newMessage.setTimestamp(String.valueOf(LocalDateTime.now()));
+
+            currentMessages.add(newMessage);
+
+            message.postValue(currentMessages);
+
+            webSocket.send(messageJson.toString());
+
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-
-        MessageModel newMessage = new MessageModel();
-        newMessage.setSenderId(senderId);
-        newMessage.setReceiverId(receiverId);
-        newMessage.setContent(content);
-        newMessage.setTimestamp(String.valueOf(LocalDateTime.now()));
-
-        currentMessages.add(newMessage);
-        message.postValue(currentMessages);
-
-        connectWebSocket(senderId, receiverId, content);
     }
 
-    private void connectWebSocket(String senderId, String receiverId, String content) {
+    public void connectWebSocket(Context context) {
+        String userId = String.valueOf(new GetDoctorIdFromToken().getDoctorId(context));
+
         Request request = new Request.Builder()
-                .url("ws://10.0.2.2:8087/ws/chat?userId=" + senderId) // replace IP if real device
+                .url("ws://10.0.2.2:8087/ws/chat?userId=" + userId)
                 .build();
 
         webSocket = client.newWebSocket(request, new WebSocketListener() {
             @Override
-            public void onOpen(WebSocket webSocket, okhttp3.Response response) {
+            public void onMessage(@NonNull WebSocket webSocket, @NonNull String text) {
                 try {
-                    JSONObject messageJson = new JSONObject();
-                    messageJson.put("senderId", senderId);
-                    messageJson.put("receiverId", receiverId);
-                    messageJson.put("content", content);
+                    JSONObject json = new JSONObject(text);
+                    MessageModel incomingMessage = new MessageModel();
+                    incomingMessage.setSenderId(json.getString("senderId"));
+                    incomingMessage.setReceiverId(json.getString("receiverId"));
+                    incomingMessage.setContent(json.getString("content"));
+                    incomingMessage.setTimestamp(LocalDateTime.now().toString());
 
-                    webSocket.send(messageJson.toString());
-                    webSocket.close(1000, null);
+                    List<MessageModel> currentMessages = message.getValue();
+                    if (currentMessages == null) currentMessages = new ArrayList<>();
+                    currentMessages.add(incomingMessage);
+                    message.postValue(currentMessages);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
 
             @Override
-            public void onFailure(WebSocket webSocket, Throwable t, okhttp3.Response response) {
-                Log.e("WebSocket", "Connection failed: " + t.getMessage());
+            public void onFailure(@NonNull WebSocket webSocket, @NonNull Throwable t, okhttp3.Response response) {
+                Log.e("WebSocket", "Failed: " + t.getMessage());
             }
         });
     }

@@ -102,7 +102,10 @@ public class MessageView extends Fragment {
         sentMessageIcon.setOnClickListener(v -> {
             String messageText = sentMessageEditText.getText().toString().trim();
             if (!messageText.isEmpty()) {
-                messageViewModel.sendMessage(requireContext(), patientId, messageText);
+                messageViewModel.connectWebSocket(requireContext());
+                messageViewModel.sendMessage(patientId,messageText,requireContext());
+
+
                 sentMessageEditText.setText("");
             }
         });

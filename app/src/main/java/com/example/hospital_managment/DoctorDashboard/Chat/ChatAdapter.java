@@ -95,7 +95,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
             activity.getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.linearChat, messageFragment)
+                    .replace(R.id.nav_host_fragment, messageFragment)
                     .addToBackStack(null)
                     .commit();
         });
