@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.hospital_managment.ApiService;
+import com.example.hospital_managment.DoctorDashboard.GetDoctorIdFromToken;
 import com.example.hospital_managment.Token.RetrofitInstance;
 import com.example.hospital_managment.Token.TokenManager;
 
@@ -27,8 +28,8 @@ public class CreateDiagnosesViewModel extends ViewModel {
     }
 
     public void createDiagnosis(Context context, String email, String diagnosis) {
-        TokenManager tokenManager = new TokenManager(context);
-        int doctorId = Integer.parseInt(getDoctorIdFromToken(tokenManager.getAccessToken()));
+        GetDoctorIdFromToken getDoctorIdFromToken = new GetDoctorIdFromToken();
+        int doctorId = getDoctorIdFromToken.getDoctorId(context);
 
         CreateDiagnosesModel model = new CreateDiagnosesModel(doctorId, email, diagnosis);
         ApiService apiService = RetrofitInstance.getApiService(context);
@@ -48,24 +49,5 @@ public class CreateDiagnosesViewModel extends ViewModel {
                 createDiagnosesResult.postValue("The system is down try again later");
             }
         });
-    }
-    public static String getDoctorIdFromToken(String token) {
-        try {
-            String[] parts = token.split("\\."); // Header, Payload, Signature
-            if (parts.length != 3) {
-                return null;
-            }
-
-            String payload = parts[1];
-            byte[] decodedBytes = Base64.decode(payload, Base64.URL_SAFE | Base64.NO_PADDING | Base64.NO_WRAP);
-            String decodedPayload = new String(decodedBytes, "UTF-8");
-
-            JSONObject jsonObject = new JSONObject(decodedPayload);
-            return jsonObject.getString("sub"); // 'sub' is usually the user ID in JWT
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 }

@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".DoctorDashboard.Diagnoses.DiagnosesView">
 
-    <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:id="@+id/linearChat"
         android:layout_width="match_parent"
@@ -15,9 +14,6 @@
         android:padding="8dp"
         tools:context=".DoctorDashboard.Diagnoses.DiagnosesView">
 
-        <!-- Title TextView -->
-
-        <!-- RecyclerView for Diagnoses -->
         <TextView
             android:id="@+id/textViewTitle"
             android:layout_width="wrap_content"

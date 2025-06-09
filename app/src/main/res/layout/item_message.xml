@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:padding="8dp">
 
-    <!-- Message Bubble -->
+
     <TextView
         android:id="@+id/placeHolderMessage"
         android:layout_width="0dp"
@@ -27,7 +27,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintHorizontal_bias="0" />
 
-    <!-- Date of Message -->
+
     <TextView
         android:id="@+id/dateOfMessage"
         android:layout_width="0dp"

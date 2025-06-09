@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.hospital_managment.ApiService;
+import com.example.hospital_managment.DoctorDashboard.GetDoctorIdFromToken;
 import com.example.hospital_managment.Token.RetrofitInstance;
 import com.example.hospital_managment.Token.TokenManager;
 
@@ -32,9 +33,8 @@ public class DiagnosesViewModel extends ViewModel {
 
     public void fetchDiagnoses(Context context) {
         ApiService apiService = RetrofitInstance.getApiService(context);
-
-        TokenManager tokenManager = new TokenManager(context);
-        int doctorId = Integer.parseInt(Objects.requireNonNull(getDoctorIdFromToken(tokenManager.getAccessToken())));
+        GetDoctorIdFromToken getDoctorIdFromToken = new GetDoctorIdFromToken();
+        int doctorId = getDoctorIdFromToken.getDoctorId(context);
         apiService.getDoctorDiagnoses(doctorId).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<List<DiagnosesModel>> call, @NonNull Response<List<DiagnosesModel>> response) {
@@ -48,24 +48,5 @@ public class DiagnosesViewModel extends ViewModel {
                 diagnoses.postValue(new ArrayList<>());
             }
         });
-    }
-    public static String getDoctorIdFromToken(String token) {
-        try {
-            String[] parts = token.split("\\."); // Header, Payload, Signature
-            if (parts.length != 3) {
-                return null;
-            }
-
-            String payload = parts[1];
-            byte[] decodedBytes = Base64.decode(payload, Base64.URL_SAFE | Base64.NO_PADDING | Base64.NO_WRAP);
-            String decodedPayload = new String(decodedBytes, "UTF-8");
-
-            JSONObject jsonObject = new JSONObject(decodedPayload);
-            return jsonObject.getString("sub"); // 'sub' is usually the user ID in JWT
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 }
