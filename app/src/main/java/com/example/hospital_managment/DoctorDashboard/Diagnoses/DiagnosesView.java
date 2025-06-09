@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.example.hospital_managment.R;
 
@@ -74,7 +73,7 @@ public class DiagnosesView extends Fragment {
 
         diagnosesViewModel = new ViewModelProvider(this).get(DiagnosesViewModel.class);
 
-        recyclerView = view.findViewById(R.id.recyclerViewDiagnoses);
+        recyclerView = view.findViewById(R.id.recyclerViewAppointments);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         adapter = new DiagnosesAdapter(new ArrayList<>());
@@ -86,6 +85,7 @@ public class DiagnosesView extends Fragment {
         });
 
         diagnosesViewModel.fetchDiagnoses(requireContext());
+
         return view;
     }
 }

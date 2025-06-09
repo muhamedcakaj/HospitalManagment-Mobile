@@ -3,12 +3,17 @@ package com.example.hospital_managment.DoctorDashboard.Appointments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.hospital_managment.R;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -57,10 +62,32 @@ public class AppointmentsView extends Fragment {
         }
     }
 
+    private AppointmentsViewModel appointmentsViewModel;
+
+    private RecyclerView recyclerView;
+
+    private AppointmentsAdapter diagnoseAdapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_appointments_view, container, false);
+       View view = inflater.inflate(R.layout.fragment_appointments_view, container, false);
+
+       appointmentsViewModel=new ViewModelProvider(this).get(AppointmentsViewModel.class);
+       recyclerView = view.findViewById(R.id.recyclerViewAppointments);
+       recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+       diagnoseAdapter = new AppointmentsAdapter(new ArrayList<>(),requireContext(),appointmentsViewModel);
+
+       recyclerView.setAdapter(diagnoseAdapter);
+
+        appointmentsViewModel.getAppointments().observe(getViewLifecycleOwner(), appointments -> {
+            diagnoseAdapter.updateList(appointments);
+        });
+
+        appointmentsViewModel.fetchDoctorAppointments(requireContext());
+
+       return view;
     }
 }

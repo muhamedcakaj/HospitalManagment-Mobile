@@ -1,5 +1,7 @@
 package com.example.hospital_managment;
 
+import com.example.hospital_managment.DoctorDashboard.Appointments.AppointmentUpdateDTO;
+import com.example.hospital_managment.DoctorDashboard.Appointments.AppointmentsModel;
 import com.example.hospital_managment.DoctorDashboard.Chat.ChatModel;
 import com.example.hospital_managment.DoctorDashboard.Chat.Message.MessageModel;
 import com.example.hospital_managment.DoctorDashboard.CreateDiagnoses.CreateDiagnosesModel;
@@ -18,6 +20,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface ApiService {
@@ -44,5 +47,11 @@ public interface ApiService {
 
     @GET("chat/messages/{user1}/{user2}")
     Call<List<MessageModel>> getMessage(@Path("user1")String user1,@Path("user2")String user2);
+
+    @GET("appointments/doctor/{id}")
+    Call<List<AppointmentsModel>>getAppointments(@Path("id")int id);
+
+    @PUT("appointments/doctors/{id}/status")
+    Call<ResponseBody>updateAppointmentsStatus(@Path("id") int id, @Body AppointmentUpdateDTO appointmentUpdateDTO);
 
 }

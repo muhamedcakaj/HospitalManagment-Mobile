@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     tools:context=".DoctorDashboard.Diagnoses.DiagnosesView">
 
-    <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -13,9 +12,6 @@
         android:padding="8dp"
         tools:context=".DoctorDashboard.Diagnoses.DiagnosesView">
 
-        <!-- Title TextView -->
-
-        <!-- RecyclerView for Diagnoses -->
         <TextView
             android:id="@+id/textViewTitle"
             android:layout_width="wrap_content"
@@ -27,7 +23,7 @@
             android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewDiagnoses"
+            android:id="@+id/recyclerViewAppointments"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
