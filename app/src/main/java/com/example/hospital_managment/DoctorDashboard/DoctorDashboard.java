@@ -1,7 +1,7 @@
 package com.example.hospital_managment.DoctorDashboard;
 
 import android.os.Bundle;
-import android.widget.Toast;
+import android.view.Menu;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +11,7 @@ import com.example.hospital_managment.DoctorDashboard.Appointments.AppointmentsV
 import com.example.hospital_managment.DoctorDashboard.Chat.ChatView;
 import com.example.hospital_managment.DoctorDashboard.CreateDiagnoses.CreateDiagnosesView;
 import com.example.hospital_managment.DoctorDashboard.Diagnoses.DiagnosesView;
+import com.example.hospital_managment.DoctorDashboard.Profile.ProfileView;
 import com.example.hospital_managment.R;
 import com.example.hospital_managment.databinding.ActivityDoctorDashboardBinding;
 
@@ -26,26 +27,20 @@ public class DoctorDashboard extends AppCompatActivity {
         binding = ActivityDoctorDashboardBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Show system UI
-
-        // Set top app bar
         setSupportActionBar(binding.topAppBar);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        binding.topAppBar.setTitle("Hello Doctor");
 
-        // Top app bar menu click
         binding.topAppBar.setOnMenuItemClickListener(item -> {
-            if (item.getItemId() == R.id.action_profile) {
-                Toast.makeText(this, "Profile Clicked", Toast.LENGTH_SHORT).show();
-                return true;
-            }
-            return false;
+            Fragment fragment=new ProfileView();
+            loadFragment(fragment);
+            return true;
         });
 
-        // Load default fragment
         if (savedInstanceState == null) {
             loadFragment(new CreateDiagnosesView());
         }
 
-        // Handle bottom navigation item clicks
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             Fragment fragment;
             int id = item.getItemId();
@@ -65,6 +60,12 @@ public class DoctorDashboard extends AppCompatActivity {
             loadFragment(fragment);
             return true;
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.top_app_menu, menu);
+        return true;
     }
 
     private void loadFragment(Fragment fragment) {
