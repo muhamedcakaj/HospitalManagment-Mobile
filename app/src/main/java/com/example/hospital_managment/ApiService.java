@@ -6,6 +6,7 @@ import com.example.hospital_managment.DoctorDashboard.Chat.ChatModel;
 import com.example.hospital_managment.DoctorDashboard.Chat.Message.MessageModel;
 import com.example.hospital_managment.DoctorDashboard.CreateDiagnoses.CreateDiagnosesModel;
 import com.example.hospital_managment.DoctorDashboard.Diagnoses.DiagnosesModel;
+import com.example.hospital_managment.DoctorDashboard.Profile.ProfileModel;
 import com.example.hospital_managment.EmailVerification.AuthResponseDTO;
 import com.example.hospital_managment.EmailVerification.EmailVerificationModel;
 import com.example.hospital_managment.Login.LoginModel;
@@ -53,5 +54,10 @@ public interface ApiService {
 
     @PUT("appointments/doctors/{id}/status")
     Call<ResponseBody>updateAppointmentsStatus(@Path("id") int id, @Body AppointmentUpdateDTO appointmentUpdateDTO);
+    @GET("doctors/{id}")
+    Call<ProfileModel> getDoctorsPersonalInfo(@Path("id")int id);
+
+    @PUT("doctors/{id}")
+    Call<ResponseBody>updateDoctorPersonalInfo(@Path("id") int id,@Body ProfileModel profileModel);
 
 }
