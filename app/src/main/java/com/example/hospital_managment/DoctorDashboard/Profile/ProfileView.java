@@ -3,10 +3,14 @@ package com.example.hospital_managment.DoctorDashboard.Profile;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.hospital_managment.R;
 
@@ -56,11 +60,41 @@ public class ProfileView extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
+    TextView nameSurnameView,gmailView;
+    EditText nameEdit,surnameEdit,specializationView,descriptionView;
+    ProfileViewModel viewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile_view, container, false);
+        View view = inflater.inflate(R.layout.fragment_profile_view, container, false);
+        nameSurnameView = view.findViewById(R.id.nameSurnameView);
+        gmailView=view.findViewById(R.id.gmailView);
+        nameEdit=view.findViewById(R.id.nameEdit);
+        surnameEdit=view.findViewById(R.id.surnameEdit);
+        specializationView=view.findViewById(R.id.specializationView);
+        descriptionView=view.findViewById(R.id.descriptionView);
+
+        viewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
+
+        viewModel.getProfileData().observe(getViewLifecycleOwner(), profile -> {
+            if (profile != null) {
+                String fullName = profile.getFirst_name() + " " + profile.getLast_name();
+                nameSurnameView.setText(fullName);
+
+                nameEdit.setText(profile.getFirst_name());
+                surnameEdit.setText(profile.getLast_name());
+                specializationView.setText(profile.getSpecialization());
+                descriptionView.setText(profile.getDescription());
+            } else {
+                Toast.makeText(getContext(), "Failed to load profile info", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // Trigger data fetch
+        viewModel.fetchPersonalInfoFromDoctor(requireContext());
+
+        return view;
     }
-}
+
+    }

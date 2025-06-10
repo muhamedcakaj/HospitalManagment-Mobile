@@ -8,7 +8,7 @@
     tools:context=".Login.LoginView">
 
     <EditText
-        android:id="@+id/editTextTextEmailAddress"
+        android:id="@+id/nameEdit"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:background="@drawable/edit_text_background"
@@ -43,7 +43,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/saveDoctorPersonalInfo"
         android:layout_width="300dp"
         android:layout_height="56dp"
         android:backgroundTint="#1877F2"

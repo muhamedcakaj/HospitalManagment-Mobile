@@ -39,7 +39,7 @@
             tools:ignore="MissingConstraints" />
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/nameSurnameView"
             android:layout_width="250dp"
             android:layout_height="40dp"
             android:fontFamily="@font/gayathri_bold"
@@ -55,7 +55,7 @@
             tools:ignore="MissingConstraints" />
 
         <TextView
-            android:id="@+id/textView7"
+            android:id="@+id/gmailView"
             android:layout_width="400dp"
             android:layout_height="40dp"
             android:fontFamily="@font/gayathri_thin"
@@ -100,7 +100,7 @@
             tools:ignore="MissingConstraints" />
 
         <EditText
-            android:id="@+id/editTextTextEmailAddress"
+            android:id="@+id/nameEdit"
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:background="@drawable/edit_text_background"
@@ -136,7 +136,7 @@
             app:layout_constraintVertical_bias="0.861" />
 
         <EditText
-            android:id="@+id/editTextTextEmailAddress2"
+            android:id="@+id/specializationView"
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:background="@drawable/edit_text_background"
@@ -154,7 +154,7 @@
             app:layout_constraintVertical_bias="0.554" />
 
         <EditText
-            android:id="@+id/editTextTextEmailAddress5"
+            android:id="@+id/descriptionView"
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:background="@drawable/edit_text_background"
@@ -172,7 +172,7 @@
             app:layout_constraintVertical_bias="0.645" />
 
         <EditText
-            android:id="@+id/editTextTextEmailAddress4"
+            android:id="@+id/surnameEdit"
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:background="@drawable/edit_text_background"
@@ -190,7 +190,7 @@
             app:layout_constraintVertical_bias="0.462" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/saveDoctorPersonalInfo"
             android:layout_width="300dp"
             android:layout_height="56dp"
             android:backgroundTint="#D9D9D9"

@@ -1,7 +1,6 @@
 package com.example.hospital_managment.DoctorDashboard.CreateDiagnoses;
 
 import android.content.Context;
-import android.util.Base64;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -11,9 +10,7 @@ import androidx.lifecycle.ViewModel;
 import com.example.hospital_managment.ApiService;
 import com.example.hospital_managment.DoctorDashboard.GetDoctorIdFromToken;
 import com.example.hospital_managment.Token.RetrofitInstance;
-import com.example.hospital_managment.Token.TokenManager;
 
-import org.json.JSONObject;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;

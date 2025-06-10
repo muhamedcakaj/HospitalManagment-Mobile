@@ -38,7 +38,7 @@ public class LoginView extends AppCompatActivity {
             return insets;
         });
 
-        emailText = findViewById(R.id.editTextTextEmailAddress);
+        emailText = findViewById(R.id.nameEdit);
         passwordText = findViewById(R.id.editTextTextPassword);
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
 
