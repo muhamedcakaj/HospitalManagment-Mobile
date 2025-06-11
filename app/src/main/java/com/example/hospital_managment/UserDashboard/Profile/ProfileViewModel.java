@@ -18,11 +18,11 @@ import retrofit2.Response;
 public class ProfileViewModel extends ViewModel {
     private MutableLiveData<com.example.hospital_managment.UserDashboard.Profile.ProfileModel> profileData = new MutableLiveData<>();
 
-    public MutableLiveData<com.example.hospital_managment.UserDashboard.Profile.ProfileModel>getProfileData() {
+    public MutableLiveData<com.example.hospital_managment.UserDashboard.Profile.ProfileModel>getProfileDataPatient() {
         return profileData;
     }
 
-    public void fetchPersonalInfoFromDoctor(Context context){
+    public void fetchPersonalInfoFromPatient(Context context){
         GetIdFromToken getIdFromToken = new GetIdFromToken();
         int patientId = getIdFromToken.getId(context);
 
@@ -44,7 +44,7 @@ public class ProfileViewModel extends ViewModel {
             }
         });
     }
-    public void updateDoctorPersonalInfo(String firstName,String lastName,String specialization,String description,Context context){
+    public void updateDoctorPersonalInfo(String firstName,String lastName,Context context){
         GetIdFromToken getPatientIdFromToken = new GetIdFromToken();
         int patientId = getPatientIdFromToken.getId(context);
 
@@ -58,7 +58,7 @@ public class ProfileViewModel extends ViewModel {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.isSuccessful()){
-                    fetchPersonalInfoFromDoctor(context);
+                    fetchPersonalInfoFromPatient(context);
                 }
             }
 

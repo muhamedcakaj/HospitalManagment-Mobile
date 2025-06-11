@@ -10,7 +10,7 @@ import com.example.hospital_managment.UserDashboard.Appointments.AppointmentsVie
 import com.example.hospital_managment.UserDashboard.Chat.ChatView;
 import com.example.hospital_managment.DoctorDashboard.CreateDiagnoses.CreateDiagnosesView;
 import com.example.hospital_managment.UserDashboard.Diagnoses.DiagnosesView;
-import com.example.hospital_managment.DoctorDashboard.Profile.ProfileView;
+import com.example.hospital_managment.UserDashboard.Profile.ProfileView;
 import com.example.hospital_managment.R;
 import com.example.hospital_managment.databinding.ActivityUserDashboardBinding;
 

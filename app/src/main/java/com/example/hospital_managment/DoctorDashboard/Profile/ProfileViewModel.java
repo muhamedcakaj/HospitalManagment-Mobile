@@ -17,7 +17,7 @@ import retrofit2.Response;
 
 public class ProfileViewModel extends ViewModel {
 
-    private MutableLiveData<ProfileModel>profileData = new MutableLiveData<>();
+    private final MutableLiveData<ProfileModel>profileData = new MutableLiveData<>();
 
     public MutableLiveData<ProfileModel>getProfileData() {
         return profileData;
@@ -29,7 +29,7 @@ public class ProfileViewModel extends ViewModel {
 
         ApiService apiService = RetrofitInstance.getApiService(context);
 
-        apiService.getDoctorsPersonalInfo(doctorId).enqueue(new Callback<ProfileModel>() {
+        apiService.getDoctorsPersonalInfo(doctorId).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<ProfileModel> call, @NonNull Response<ProfileModel> response) {
                 if(response.isSuccessful()){
@@ -57,16 +57,16 @@ public class ProfileViewModel extends ViewModel {
         profileModel.setSpecialization(specialization);
         profileModel.setDescription(description);
 
-        apiService.updateDoctorPersonalInfo(doctorId,profileModel).enqueue(new Callback<ResponseBody>() {
+        apiService.updateDoctorPersonalInfo(doctorId,profileModel).enqueue(new Callback<>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 if(response.isSuccessful()){
                     fetchPersonalInfoFromDoctor(context);
                 }
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
 
             }
         });
