@@ -7,7 +7,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import com.example.hospital_managment.UserDashboard.Appointments.AppointmentsView;
-import com.example.hospital_managment.DoctorDashboard.Chat.ChatView;
+import com.example.hospital_managment.UserDashboard.Chat.ChatView;
 import com.example.hospital_managment.DoctorDashboard.CreateDiagnoses.CreateDiagnosesView;
 import com.example.hospital_managment.UserDashboard.Diagnoses.DiagnosesView;
 import com.example.hospital_managment.DoctorDashboard.Profile.ProfileView;

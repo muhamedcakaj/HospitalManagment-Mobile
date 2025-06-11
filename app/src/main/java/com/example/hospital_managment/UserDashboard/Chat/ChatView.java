@@ -3,12 +3,19 @@ package com.example.hospital_managment.UserDashboard.Chat;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.hospital_managment.GetIdFromToken;
 import com.example.hospital_managment.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -57,10 +64,61 @@ public class ChatView extends Fragment {
         }
     }
 
+    private ChatViewModel chatViewModel;
+    private RecyclerView recyclerView;
+    private ChatAdapter chatAdapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_chat_view2, container, false);
+
+       View view = inflater.inflate(R.layout.fragment_chat_view2, container, false);
+
+        chatViewModel = new ViewModelProvider(this).get(ChatViewModel.class);
+
+        recyclerView = view.findViewById(R.id.recyclerViewChat);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        chatAdapter = new ChatAdapter(new ArrayList<>(),requireContext());
+
+        recyclerView.setAdapter(chatAdapter);
+
+        chatViewModel.getChats().observe(getViewLifecycleOwner(), existingChats -> {
+            chatViewModel.getAllDoctors().observe(getViewLifecycleOwner(), allDoctors -> {
+                List<ChatModel> combinedChats = new ArrayList<>();
+                GetIdFromToken getIdFromToken = new GetIdFromToken();
+                String patientId = String.valueOf(getIdFromToken.getId(requireContext()));
+
+
+                combinedChats.addAll(existingChats);
+
+                for (GetDoctorsDTO doctor : allDoctors) {
+                    String doctorId = String.valueOf(doctor.getId());
+
+                    boolean alreadyChatted = false;
+                    for (ChatModel chat : existingChats) {
+                        if ((chat.getUserId1().equals(patientId) && chat.getUserId2().equals(doctorId)) ||
+                                (chat.getUserId2().equals(patientId) && chat.getUserId1().equals(doctorId))) {
+                            alreadyChatted = true;
+                            break;
+                        }
+                    }
+
+                    if (!alreadyChatted) {
+                        ChatModel starterChat = new ChatModel();
+                        starterChat.setUserId1(patientId);
+                        starterChat.setUserId2(doctorId);
+                        combinedChats.add(starterChat);
+                    }
+                }
+
+                chatAdapter.updateList(combinedChats);
+            });
+            chatViewModel.fetchAllDoctors(requireContext());
+        });
+
+        chatViewModel.fetchChats(requireContext());
+
+       return view;
     }
 }

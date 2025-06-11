@@ -1,7 +1,4 @@
 package com.example.hospital_managment.DoctorDashboard.Chat;
-
-import java.time.LocalDateTime;
-
 public class ChatModel {
     private String id;
     private String userId1;

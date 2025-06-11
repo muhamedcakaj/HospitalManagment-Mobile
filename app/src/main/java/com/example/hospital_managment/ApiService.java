@@ -13,6 +13,7 @@ import com.example.hospital_managment.Login.LoginModel;
 import com.example.hospital_managment.SignUp.SignUpModel;
 import com.example.hospital_managment.Token.RefreshToken.RefreshRequest;
 import com.example.hospital_managment.Token.RefreshToken.TokenResponse;
+import com.example.hospital_managment.UserDashboard.Chat.GetDoctorsDTO;
 
 import java.util.List;
 
@@ -36,6 +37,8 @@ public interface ApiService {
 
     @POST("auth/refresh-token")
     Call<TokenResponse> refreshToken(@Body RefreshRequest request);
+
+    //Doctor API-S below
 
     @POST("diagnosis/doctor")
     Call<ResponseBody>createDiagnoses(@Body CreateDiagnosesModel createDiagnosesModel);
@@ -67,6 +70,11 @@ public interface ApiService {
 
     @GET("diagnosis/user/{id}")
     Call<List<com.example.hospital_managment.UserDashboard.Diagnoses.DiagnosesModel>>getPatientDiagnoses(@Path("id")int id);
+    @GET("chat/conversations/{userId}")
+    Call<List<com.example.hospital_managment.UserDashboard.Chat.ChatModel>> getChatsForPatients (@Path("userId") int userId);
+
+    @GET("doctors/user")
+    Call<List<GetDoctorsDTO>>getAllDoctors();
 
 
 }

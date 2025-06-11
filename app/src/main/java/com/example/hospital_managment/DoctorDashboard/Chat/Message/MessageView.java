@@ -98,7 +98,9 @@ public class MessageView extends Fragment {
 
         messageViewModel.getMessage().observe(getViewLifecycleOwner(), messages -> {
             messageAdapter.updateList(messages);
-            recyclerView.smoothScrollToPosition(messageAdapter.getItemCount() - 1);
+            if(messageAdapter.getItemCount()!=0) {
+                recyclerView.smoothScrollToPosition(messageAdapter.getItemCount() - 1);
+            }
         });
 
         messageViewModel.fetchMessage(requireContext(), patientId);
