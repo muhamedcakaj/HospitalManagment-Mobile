@@ -1,4 +1,4 @@
-package com.example.hospital_managment.DoctorDashboard;
+package com.example.hospital_managment;
 
 import android.content.Context;
 import android.util.Base64;
@@ -7,14 +7,14 @@ import com.example.hospital_managment.Token.TokenManager;
 
 import org.json.JSONObject;
 
-public class GetDoctorIdFromToken {
+public class GetIdFromToken {
 
-    public int getDoctorId(Context context){
+    public int getId(Context context){
         try {
             TokenManager tokenManager = new TokenManager(context);
             String token =tokenManager.getAccessToken();
 
-            String[] parts = token.split("\\."); // Header, Payload, Signature
+            String[] parts = token.split("\\.");
             if (parts.length != 3) {
                 return -1;
             }

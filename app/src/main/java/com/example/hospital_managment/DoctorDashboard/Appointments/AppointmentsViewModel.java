@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.hospital_managment.ApiService;
-import com.example.hospital_managment.DoctorDashboard.GetDoctorIdFromToken;
+import com.example.hospital_managment.GetIdFromToken;
 import com.example.hospital_managment.Token.RetrofitInstance;
 
 import java.util.ArrayList;
@@ -28,8 +28,8 @@ public class AppointmentsViewModel extends ViewModel {
     public void fetchDoctorAppointments(Context context){
         ApiService apiService = RetrofitInstance.getApiService(context);
 
-        GetDoctorIdFromToken getDoctorIdFromToken = new GetDoctorIdFromToken();
-        int doctorId = getDoctorIdFromToken.getDoctorId(context);
+        GetIdFromToken getDoctorIdFromToken = new GetIdFromToken();
+        int doctorId = getDoctorIdFromToken.getId(context);
 
         apiService.getAppointments(doctorId).enqueue(new Callback<>() {
             @Override

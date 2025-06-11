@@ -8,7 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.hospital_managment.ApiService;
-import com.example.hospital_managment.DoctorDashboard.GetDoctorIdFromToken;
+import com.example.hospital_managment.GetIdFromToken;
 import com.example.hospital_managment.Token.RetrofitInstance;
 
 
@@ -25,8 +25,8 @@ public class CreateDiagnosesViewModel extends ViewModel {
     }
 
     public void createDiagnosis(Context context, String email, String diagnosis) {
-        GetDoctorIdFromToken getDoctorIdFromToken = new GetDoctorIdFromToken();
-        int doctorId = getDoctorIdFromToken.getDoctorId(context);
+        GetIdFromToken getDoctorIdFromToken = new GetIdFromToken();
+        int doctorId = getDoctorIdFromToken.getId(context);
 
         CreateDiagnosesModel model = new CreateDiagnosesModel(doctorId, email, diagnosis);
         ApiService apiService = RetrofitInstance.getApiService(context);

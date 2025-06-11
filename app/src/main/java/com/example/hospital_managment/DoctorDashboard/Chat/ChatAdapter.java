@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.hospital_managment.DoctorDashboard.Chat.Message.MessageView;
-import com.example.hospital_managment.DoctorDashboard.GetDoctorIdFromToken;
+import com.example.hospital_managment.GetIdFromToken;
 import com.example.hospital_managment.R;
 
 import java.util.List;
@@ -61,8 +61,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ChatAdapter.ViewHolder holder, int position) {
         ChatModel chat = chatList.get(position);
 
-        GetDoctorIdFromToken getDoctorIdFromToken = new GetDoctorIdFromToken();
-        String doctorId = String.valueOf(getDoctorIdFromToken.getDoctorId(context));
+        GetIdFromToken getDoctorIdFromToken = new GetIdFromToken();
+        String doctorId = String.valueOf(getDoctorIdFromToken.getId(context));
 
         if(chat.getUserId1().equals(doctorId)){
             holder.chatName.setText("Patient ID: " + chat.getUserId2());

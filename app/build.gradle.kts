@@ -44,7 +44,6 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
     implementation(libs.converter.scalars)
-
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)

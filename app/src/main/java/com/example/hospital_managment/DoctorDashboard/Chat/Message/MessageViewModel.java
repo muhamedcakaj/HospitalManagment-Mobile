@@ -8,7 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.hospital_managment.ApiService;
-import com.example.hospital_managment.DoctorDashboard.GetDoctorIdFromToken;
+import com.example.hospital_managment.GetIdFromToken;
 import com.example.hospital_managment.Token.RetrofitInstance;
 
 import org.json.JSONException;
@@ -40,8 +40,8 @@ public class MessageViewModel extends ViewModel {
         System.out.println(patientId);
         ApiService apiService= RetrofitInstance.getApiService(context);
 
-        GetDoctorIdFromToken getDoctorIdFromToken = new GetDoctorIdFromToken();
-        String doctorId = String.valueOf(getDoctorIdFromToken.getDoctorId(context));
+        GetIdFromToken getDoctorIdFromToken = new GetIdFromToken();
+        String doctorId = String.valueOf(getDoctorIdFromToken.getId(context));
 
         apiService.getMessage(doctorId,patientId).enqueue(new Callback<>() {
             @Override
@@ -60,8 +60,8 @@ public class MessageViewModel extends ViewModel {
     }
     /// /////////////////////////////////////////////////////////////////
     public void sendMessage(String receiverId, String content, Context context) {
-        GetDoctorIdFromToken getDoctorIdFromToken = new GetDoctorIdFromToken();
-        String senderId = String.valueOf(getDoctorIdFromToken.getDoctorId(context));
+        GetIdFromToken getDoctorIdFromToken = new GetIdFromToken();
+        String senderId = String.valueOf(getDoctorIdFromToken.getId(context));
         try {
             JSONObject messageJson = new JSONObject();
             messageJson.put("senderId", senderId);
@@ -94,7 +94,7 @@ public class MessageViewModel extends ViewModel {
     public void connectWebSocket(Context context) {
         if (isConnected) return;
 
-        String userId = String.valueOf(new GetDoctorIdFromToken().getDoctorId(context));
+        String userId = String.valueOf(new GetIdFromToken().getId(context));
         Request request = new Request.Builder()
                 .url("ws://10.0.2.2:8087/ws/chat?userId=" + userId)
                 .build();

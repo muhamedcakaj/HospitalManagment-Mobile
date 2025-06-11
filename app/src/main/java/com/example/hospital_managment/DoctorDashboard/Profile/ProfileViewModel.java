@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.hospital_managment.ApiService;
-import com.example.hospital_managment.DoctorDashboard.GetDoctorIdFromToken;
+import com.example.hospital_managment.GetIdFromToken;
 import com.example.hospital_managment.Token.RetrofitInstance;
 
 import okhttp3.ResponseBody;
@@ -24,8 +24,8 @@ public class ProfileViewModel extends ViewModel {
     }
 
     public void fetchPersonalInfoFromDoctor(Context context){
-        GetDoctorIdFromToken getDoctorIdFromToken = new GetDoctorIdFromToken();
-        int doctorId = getDoctorIdFromToken.getDoctorId(context);
+        GetIdFromToken getDoctorIdFromToken = new GetIdFromToken();
+        int doctorId = getDoctorIdFromToken.getId(context);
 
         ApiService apiService = RetrofitInstance.getApiService(context);
 
@@ -46,8 +46,8 @@ public class ProfileViewModel extends ViewModel {
         });
     }
     public void updateDoctorPersonalInfo(String firstName,String lastName,String specialization,String description,Context context){
-        GetDoctorIdFromToken getDoctorIdFromToken = new GetDoctorIdFromToken();
-        int doctorId = getDoctorIdFromToken.getDoctorId(context);
+        GetIdFromToken getDoctorIdFromToken = new GetIdFromToken();
+        int doctorId = getDoctorIdFromToken.getId(context);
 
         ApiService apiService=RetrofitInstance.getApiService(context);
 

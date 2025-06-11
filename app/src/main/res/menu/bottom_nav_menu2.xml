@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/nav_create_diagnoses"
+        android:icon="@drawable/all_appointments_icon"
+        android:title="Create Appointments" />
+    <item
+        android:id="@+id/nav_appointments"
+        android:icon="@drawable/myappointments"
+        android:title="Appointments" />
+    <item
+        android:id="@+id/nav_chat"
+        android:icon="@drawable/message"
+        android:title="Chat" />
+    <item
+        android:id="@+id/nav_diagnoses"
+        android:icon="@drawable/mydiagnoses"
+        android:title="Diagnoses" />
+</menu>

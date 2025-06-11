@@ -6,8 +6,8 @@
 
     <application
         android:allowBackup="true"
-        android:enableOnBackInvokedCallback="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
+        android:enableOnBackInvokedCallback="true"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -18,8 +18,11 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".UserDashboard.UserDashboard"
+            android:exported="false" />
+        <activity
             android:name=".DoctorDashboard.DoctorDashboard"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".DoctorDashboard.CreateDiagnoses.CreateDiagnosesView"
             android:exported="false"

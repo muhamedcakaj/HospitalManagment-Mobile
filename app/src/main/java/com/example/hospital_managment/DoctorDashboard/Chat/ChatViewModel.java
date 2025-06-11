@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.hospital_managment.ApiService;
-import com.example.hospital_managment.DoctorDashboard.GetDoctorIdFromToken;
+import com.example.hospital_managment.GetIdFromToken;
 import com.example.hospital_managment.Token.RetrofitInstance;
 
 import java.util.ArrayList;
@@ -29,9 +29,9 @@ public class ChatViewModel extends ViewModel {
 
         ApiService apiservice = RetrofitInstance.getApiService(context);
 
-        GetDoctorIdFromToken getDoctorIdFromToken = new GetDoctorIdFromToken();
+        GetIdFromToken getDoctorIdFromToken = new GetIdFromToken();
 
-        int userId = getDoctorIdFromToken.getDoctorId(context);
+        int userId = getDoctorIdFromToken.getId(context);
 
         apiservice.getChats(userId).enqueue(new Callback<>() {
             @Override

@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.hospital_managment.DoctorDashboard.GetDoctorIdFromToken;
+import com.example.hospital_managment.GetIdFromToken;
 import com.example.hospital_managment.R;
 
 import java.util.List;
@@ -49,8 +49,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         MessageModel message = this.messageList.get(position);
 
-        GetDoctorIdFromToken getDoctorIdFromToken = new GetDoctorIdFromToken();
-        String doctorId = String.valueOf(getDoctorIdFromToken.getDoctorId(context));
+        GetIdFromToken getDoctorIdFromToken = new GetIdFromToken();
+        String doctorId = String.valueOf(getDoctorIdFromToken.getId(context));
 
         ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) holder.placeHolderMessage.getLayoutParams();
         ConstraintLayout.LayoutParams params2 = (ConstraintLayout.LayoutParams) holder.dateOfMessage.getLayoutParams();

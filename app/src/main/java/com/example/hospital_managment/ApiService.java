@@ -60,4 +60,9 @@ public interface ApiService {
     @PUT("doctors/{id}")
     Call<ResponseBody>updateDoctorPersonalInfo(@Path("id") int id,@Body ProfileModel profileModel);
 
+    //Patient API-S below
+
+    @GET("appointments/user/{id}")
+    Call<List<com.example.hospital_managment.UserDashboard.Appointments.AppointmentsModel>>getPatientAppointments(@Path("id")int id);
+
 }
