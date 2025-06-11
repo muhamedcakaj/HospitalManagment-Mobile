@@ -76,5 +76,12 @@ public interface ApiService {
     @GET("doctors/user")
     Call<List<GetDoctorsDTO>>getAllDoctors();
 
+    @GET("users/{id}")
+    Call<com.example.hospital_managment.UserDashboard.Profile.ProfileModel>getPersonalInfoOfPatient(@Path("id")int id);
+
+    @PUT("users/{id}")
+    Call<ResponseBody>updatePersonalInfoOfPatient(@Path("id")int id, @Body com.example.hospital_managment.UserDashboard.Profile.ProfileModel profileModel);
+
+
 
 }
