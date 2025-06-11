@@ -48,10 +48,6 @@ public class AppointmentsModel {
         return appointemntStatus;
     }
 
-    public void setAppointemntStatus(String appointemntStatus) {
-        this.appointemntStatus = appointemntStatus;
-    }
-
     public int getId() {
         return id;
     }

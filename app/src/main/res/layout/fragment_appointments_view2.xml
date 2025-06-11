@@ -3,12 +3,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UserDashboard.Appointments.AppointmentsView">
+    tools:context="UserDashboard.Appointments.AppointmentsView">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical"
+        android:padding="8dp"
+        tools:context=".DoctorDashboard.Diagnoses.DiagnosesView"
+        tools:ignore="UselessParent">
+
+        <TextView
+            android:id="@+id/textViewTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/gayathri_bold"
+            android:text="My Appointments"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewAppointments"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            tools:ignore="SpeakableTextPresentCheck" />
+    </LinearLayout>
 
 </FrameLayout>

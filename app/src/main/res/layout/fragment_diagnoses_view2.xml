@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DoctorDashboard.Diagnoses.DiagnosesView">
+    tools:context=".UserDashboard.Diagnoses.DiagnosesView">
 
     <LinearLayout
-        android:id="@+id/linearChat"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="8dp"
-        tools:context=".DoctorDashboard.Diagnoses.DiagnosesView">
+        tools:context=".UserDashboard.Diagnoses.DiagnosesView">
 
         <TextView
             android:id="@+id/textViewTitle"
@@ -20,12 +18,12 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:fontFamily="@font/gayathri_bold"
-            android:text="Select a conversation to start chatting"
+            android:text="My Diagnoses"
             android:textSize="20sp"
             android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewChat"
+            android:id="@+id/recyclerViewAppointments"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"

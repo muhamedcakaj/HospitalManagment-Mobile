@@ -6,30 +6,29 @@ import android.view.Menu;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-
-import com.example.hospital_managment.DoctorDashboard.Appointments.AppointmentsView;
+import com.example.hospital_managment.UserDashboard.Appointments.AppointmentsView;
 import com.example.hospital_managment.DoctorDashboard.Chat.ChatView;
 import com.example.hospital_managment.DoctorDashboard.CreateDiagnoses.CreateDiagnosesView;
-import com.example.hospital_managment.DoctorDashboard.Diagnoses.DiagnosesView;
+import com.example.hospital_managment.UserDashboard.Diagnoses.DiagnosesView;
 import com.example.hospital_managment.DoctorDashboard.Profile.ProfileView;
 import com.example.hospital_managment.R;
-import com.example.hospital_managment.databinding.ActivityDoctorDashboardBinding;
+import com.example.hospital_managment.databinding.ActivityUserDashboardBinding;
 
 public class UserDashboard extends AppCompatActivity {
 
-    private com.example.hospital_managment.databinding.ActivityDoctorDashboardBinding binding;
+    private com.example.hospital_managment.databinding.ActivityUserDashboardBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
 
-        binding = ActivityDoctorDashboardBinding.inflate(getLayoutInflater());
+        binding = ActivityUserDashboardBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.topAppBar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
-        binding.topAppBar.setTitle("Hello Doctor");
+        binding.topAppBar.setTitle("Hello Patient");
 
         binding.topAppBar.setOnMenuItemClickListener(item -> {
             Fragment fragment=new ProfileView();

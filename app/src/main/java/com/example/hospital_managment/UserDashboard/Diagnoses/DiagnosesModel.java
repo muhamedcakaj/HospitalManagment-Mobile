@@ -1,4 +1,5 @@
-package com.example.hospital_managment.DoctorDashboard.Diagnoses;
+package com.example.hospital_managment.UserDashboard.Diagnoses;
+
 public class DiagnosesModel {
     private int id;
 

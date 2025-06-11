@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.hospital_managment.DoctorDashboard.DoctorDashboard;
 import com.example.hospital_managment.R;
+import com.example.hospital_managment.UserDashboard.UserDashboard;
 
 public class EmailVerificationView extends AppCompatActivity {
     private EditText verificationCode;
@@ -58,7 +59,12 @@ public class EmailVerificationView extends AppCompatActivity {
         if(message.equals("Doctor")){
             Intent intent = new Intent(this, DoctorDashboard.class);
             startActivity(intent);
-        }else {
+        }
+        else if(message.equals("User")){
+            Intent intent = new Intent(this, UserDashboard.class);
+            startActivity(intent);
+        }
+        else {
             new AlertDialog.Builder(this)
                     .setTitle(title)
                     .setMessage(message)

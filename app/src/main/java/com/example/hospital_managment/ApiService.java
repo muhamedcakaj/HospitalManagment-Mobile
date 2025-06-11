@@ -65,4 +65,8 @@ public interface ApiService {
     @GET("appointments/user/{id}")
     Call<List<com.example.hospital_managment.UserDashboard.Appointments.AppointmentsModel>>getPatientAppointments(@Path("id")int id);
 
+    @GET("diagnosis/user/{id}")
+    Call<List<com.example.hospital_managment.UserDashboard.Diagnoses.DiagnosesModel>>getPatientDiagnoses(@Path("id")int id);
+
+
 }
