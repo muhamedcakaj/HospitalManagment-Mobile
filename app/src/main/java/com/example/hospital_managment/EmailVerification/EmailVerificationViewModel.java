@@ -9,10 +9,15 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.hospital_managment.ApiService;
+import com.example.hospital_managment.GetIdFromToken;
+import com.example.hospital_managment.PushNotifications.FcmTokenDTO;
+import com.example.hospital_managment.Token.RetrofitInstance;
 import com.example.hospital_managment.Token.TokenManager;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONObject;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -50,8 +55,7 @@ public class EmailVerificationViewModel extends ViewModel {
                     tokenManager.saveTokens(token,refreshToken);
                     String role = getRoleFromToken(token);
 
-                    System.out.println("EmailToken "+token);
-                    System.out.println("EmailRefreshToken "+refreshToken);
+                    saveFcmToken(context);
 
                     emailVerifyResult.postValue(role);
 
@@ -65,6 +69,38 @@ public class EmailVerificationViewModel extends ViewModel {
             }
         });
     }
+    public void saveFcmToken(Context context){
+        ApiService apiService = RetrofitInstance.getApiService(context);
+
+        GetIdFromToken getIdFromToken=new GetIdFromToken();
+        int id = getIdFromToken.getId(context);
+
+        FcmTokenDTO fcmTokenDTO = new FcmTokenDTO();
+
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(task -> {
+                    System.out.println("IsTask : "+task.isSuccessful());
+                    if (task.isSuccessful()) {
+                        String token = task.getResult();
+                        fcmTokenDTO.setFcmToken(token);
+                        apiService.addRefreshFcmTokenDto(id,fcmTokenDTO).enqueue(new Callback<>() {
+                            @Override
+                            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                                System.out.println("Response:"+response.isSuccessful());
+                                if(response.isSuccessful()){
+                                    System.out.println("Success");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+
+                            }
+                        });
+                    }
+                });
+    }
+
     public String getRoleFromToken(String token) {
         try {
             String[] parts = token.split("\\.");

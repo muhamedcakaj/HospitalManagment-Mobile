@@ -10,6 +10,7 @@ import com.example.hospital_managment.DoctorDashboard.Profile.ProfileModel;
 import com.example.hospital_managment.EmailVerification.AuthResponseDTO;
 import com.example.hospital_managment.EmailVerification.EmailVerificationModel;
 import com.example.hospital_managment.Login.LoginModel;
+import com.example.hospital_managment.PushNotifications.FcmTokenDTO;
 import com.example.hospital_managment.SignUp.SignUpModel;
 import com.example.hospital_managment.Token.RefreshToken.RefreshRequest;
 import com.example.hospital_managment.Token.RefreshToken.TokenResponse;
@@ -82,6 +83,7 @@ public interface ApiService {
     @PUT("users/{id}")
     Call<ResponseBody>updatePersonalInfoOfPatient(@Path("id")int id, @Body com.example.hospital_managment.UserDashboard.Profile.ProfileModel profileModel);
 
-
-
+    //Push Notifications Api-s
+    @PUT("auth/addFcmToken/{id}")
+    Call<ResponseBody>addRefreshFcmTokenDto(@Path("id")int id, @Body FcmTokenDTO fcmTokenDTO);
 }
