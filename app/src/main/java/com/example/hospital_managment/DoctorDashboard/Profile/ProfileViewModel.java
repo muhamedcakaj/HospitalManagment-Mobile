@@ -71,4 +71,21 @@ public class ProfileViewModel extends ViewModel {
             }
         });
     }
+    public void deleteFcmTokenFromUser(Context context){
+        GetIdFromToken getIdFromToken = new GetIdFromToken();
+        int id = getIdFromToken.getId(context);
+        ApiService apiService = RetrofitInstance.getApiService(context);
+
+        apiService.deleteFcmTokenFromUser(id).enqueue(new Callback<>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
 }

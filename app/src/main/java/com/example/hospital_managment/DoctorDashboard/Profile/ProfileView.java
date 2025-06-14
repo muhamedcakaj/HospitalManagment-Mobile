@@ -1,5 +1,6 @@
 package com.example.hospital_managment.DoctorDashboard.Profile;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -13,6 +14,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.hospital_managment.MainActivity;
 import com.example.hospital_managment.R;
 import com.example.hospital_managment.Token.TokenManager;
 
@@ -67,7 +70,7 @@ public class ProfileView extends Fragment {
     TextView nameSurnameView,gmailView;
     EditText nameEdit,surnameEdit,specializationView,descriptionView;
     ProfileViewModel viewModel;
-    Button saveDoctorPersonalInfo;
+    Button saveDoctorPersonalInfo,logOut;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -80,6 +83,7 @@ public class ProfileView extends Fragment {
         specializationView=view.findViewById(R.id.specializationView);
         descriptionView=view.findViewById(R.id.descriptionView);
         saveDoctorPersonalInfo=view.findViewById(R.id.saveDoctorPersonalInfo);
+        logOut=view.findViewById(R.id.logOut);
 
         viewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
 
@@ -111,6 +115,17 @@ public class ProfileView extends Fragment {
                 Toast.makeText(getContext(), "Personal information updated successfully", Toast.LENGTH_SHORT).show();
             }
         });
+
+        logOut.setOnClickListener(v->{
+            TokenManager tokenManager = new TokenManager(requireContext());
+            tokenManager.clearTokens();
+            viewModel.deleteFcmTokenFromUser(requireContext());
+            Intent intent = new Intent(getActivity(), MainActivity.class);
+            startActivity(intent);
+
+        });
+
+
 
         return view;
     }

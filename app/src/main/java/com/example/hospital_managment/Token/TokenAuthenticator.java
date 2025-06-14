@@ -47,7 +47,7 @@ public class TokenAuthenticator implements Authenticator {
                     .build();
         }
 
-        tokenManager.clearTokens(); // optional
+        tokenManager.clearTokens();
         return null;
     }
 

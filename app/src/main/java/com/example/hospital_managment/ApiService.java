@@ -86,4 +86,9 @@ public interface ApiService {
     //Push Notifications Api-s
     @PUT("auth/addFcmToken/{id}")
     Call<ResponseBody>addRefreshFcmTokenDto(@Path("id")int id, @Body FcmTokenDTO fcmTokenDTO);
+
+    //Delete FcmToken API
+
+    @PUT("auth/deleteFcmToken/{id}")
+    Call<ResponseBody>deleteFcmTokenFromUser(@Path("id")int id);
 }

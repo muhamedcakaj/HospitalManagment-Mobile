@@ -54,6 +54,7 @@ public class EmailVerificationViewModel extends ViewModel {
                     TokenManager tokenManager = new TokenManager(context);
                     tokenManager.saveTokens(token,refreshToken);
                     String role = getRoleFromToken(token);
+                    tokenManager.saveRole(role);
 
                     saveFcmToken(context);
 

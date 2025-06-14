@@ -12,13 +12,32 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.hospital_managment.DoctorDashboard.DoctorDashboard;
 import com.example.hospital_managment.Login.LoginView;
 import com.example.hospital_managment.SignUp.SignUpView;
+import com.example.hospital_managment.Token.TokenManager;
+import com.example.hospital_managment.UserDashboard.UserDashboard;
 
 public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        TokenManager tokenManager = new TokenManager(MainActivity.this);
+        if (!(tokenManager.isTokenExpired())) {
+            if(tokenManager.getRole().equals("Doctor")){
+                Intent intent = new Intent(this, DoctorDashboard.class);
+                startActivity(intent);
+                finish();
+                return;
+            }else{
+                Intent intent = new Intent(this, UserDashboard.class);
+                startActivity(intent);
+                finish();
+                return;
+            }
+
+        }
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {

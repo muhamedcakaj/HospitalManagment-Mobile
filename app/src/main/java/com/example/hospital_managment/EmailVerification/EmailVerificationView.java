@@ -58,10 +58,12 @@ public class EmailVerificationView extends AppCompatActivity {
     public void showMessage(String title,String message){
         if(message.equals("Doctor")){
             Intent intent = new Intent(this, DoctorDashboard.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }
         else if(message.equals("User")){
             Intent intent = new Intent(this, UserDashboard.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Clears the back stack
             startActivity(intent);
         }
         else {
