@@ -16,7 +16,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ProfileViewModel extends ViewModel {
-    private MutableLiveData<com.example.hospital_managment.UserDashboard.Profile.ProfileModel> profileData = new MutableLiveData<>();
+    private final MutableLiveData<com.example.hospital_managment.UserDashboard.Profile.ProfileModel> profileData = new MutableLiveData<>();
 
     public MutableLiveData<com.example.hospital_managment.UserDashboard.Profile.ProfileModel>getProfileDataPatient() {
         return profileData;
@@ -56,14 +56,31 @@ public class ProfileViewModel extends ViewModel {
 
         apiService.updatePersonalInfoOfPatient(patientId,profileModel).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 if(response.isSuccessful()){
                     fetchPersonalInfoFromPatient(context);
                 }
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+
+            }
+        });
+    }
+    public void deleteFcmTokenFromUser(Context context){
+        GetIdFromToken getIdFromToken = new GetIdFromToken();
+        int id = getIdFromToken.getId(context);
+        ApiService apiService = RetrofitInstance.getApiService(context);
+
+        apiService.deleteFcmTokenFromUser(id).enqueue(new Callback<>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
 
             }
         });

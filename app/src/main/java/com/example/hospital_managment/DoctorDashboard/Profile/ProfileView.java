@@ -118,8 +118,8 @@ public class ProfileView extends Fragment {
 
         logOut.setOnClickListener(v->{
             TokenManager tokenManager = new TokenManager(requireContext());
-            tokenManager.clearTokens();
             viewModel.deleteFcmTokenFromUser(requireContext());
+            tokenManager.clearTokens();
             Intent intent = new Intent(getActivity(), MainActivity.class);
             startActivity(intent);
 
