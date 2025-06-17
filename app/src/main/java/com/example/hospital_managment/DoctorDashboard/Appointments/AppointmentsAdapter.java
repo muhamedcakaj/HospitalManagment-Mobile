@@ -55,7 +55,7 @@ public class AppointmentsAdapter extends RecyclerView.Adapter<AppointmentsAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         AppointmentsModel appointments = appointmentsList.get(position);
 
-        holder.nameOfAppointments.setText("User ID: " +appointments.getUserId());
+        holder.nameOfAppointments.setText("Patient : " +appointments.getUserName()+" "+appointments.getUserSurname());
         holder.dateOfAppointments.setText(appointments.getLocalDate()+","+appointments.getLocalTime());
         holder.changeAppointmentStatus.setText(appointments.getAppointemntStatus());
 

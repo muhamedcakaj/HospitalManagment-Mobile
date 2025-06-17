@@ -1,11 +1,16 @@
 package com.example.hospital_managment.DoctorDashboard.Appointments;
-
 public class AppointmentsModel {
 
     private int id;
     private int doctorId;
 
+    private String doctorName;
+    private String doctorSurname;
     private int userId;
+
+    private String userEmail;
+    private String userName;
+    private String userSurname;
 
     private String localDate;
 
@@ -48,11 +53,52 @@ public class AppointmentsModel {
         return appointemntStatus;
     }
 
-    public void setAppointemntStatus(String appointemntStatus) {
-        this.appointemntStatus = appointemntStatus;
-    }
-
     public int getId() {
         return id;
     }
+
+    public String getDoctorName() {
+        return doctorName;
+    }
+
+    public void setDoctorName(String doctorName) {
+        this.doctorName = doctorName;
+    }
+
+    public String getDoctorSurname() {
+        return doctorSurname;
+    }
+
+    public void setDoctorSurname(String doctorSurname) {
+        this.doctorSurname = doctorSurname;
+    }
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserSurname() {
+        return userSurname;
+    }
+
+    public void setUserSurname(String userSurname) {
+        this.userSurname = userSurname;
+    }
+
+    public void setAppointemntStatus(String appointemntStatus) {
+        this.appointemntStatus = appointemntStatus;
+    }
 }
+

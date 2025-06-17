@@ -117,10 +117,9 @@ public class ProfileView extends Fragment {
         });
 
         logOut.setOnClickListener(v->{
-            TokenManager tokenManager = new TokenManager(requireContext());
             viewModel.deleteFcmTokenFromUser(requireContext());
-            tokenManager.clearTokens();
             Intent intent = new Intent(getActivity(), MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Clears the back stack
             startActivity(intent);
 
         });

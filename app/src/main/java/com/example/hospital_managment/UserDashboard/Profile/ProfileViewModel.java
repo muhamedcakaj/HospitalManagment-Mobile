@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel;
 import com.example.hospital_managment.ApiService;
 import com.example.hospital_managment.GetIdFromToken;
 import com.example.hospital_managment.Token.RetrofitInstance;
+import com.example.hospital_managment.Token.TokenManager;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -76,7 +77,10 @@ public class ProfileViewModel extends ViewModel {
         apiService.deleteFcmTokenFromUser(id).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
-
+                if(response.isSuccessful()){
+                    TokenManager tokenManager = new TokenManager(context);
+                    tokenManager.clearTokens();
+                }
             }
 
             @Override

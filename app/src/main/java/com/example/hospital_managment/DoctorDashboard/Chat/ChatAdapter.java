@@ -64,11 +64,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         GetIdFromToken getDoctorIdFromToken = new GetIdFromToken();
         String doctorId = String.valueOf(getDoctorIdFromToken.getId(context));
 
-        if(chat.getUserId1().equals(doctorId)){
-            holder.chatName.setText("Patient ID: " + chat.getUserId2());
-        }else{
-            holder.chatName.setText("Patient ID: " + chat.getUserId1());
-        }
+            holder.chatName.setText(chat.getPatientName()+" "+chat.getPatientSurname());
+
 
         if(chat.getLastSenderId().equals(doctorId)){
             holder.chatStatus.setText("Delivered");

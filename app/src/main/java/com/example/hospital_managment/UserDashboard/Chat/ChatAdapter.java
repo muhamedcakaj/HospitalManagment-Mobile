@@ -63,11 +63,9 @@ public class ChatAdapter extends RecyclerView.Adapter<com.example.hospital_manag
         GetIdFromToken getIdFromToken = new GetIdFromToken();
         String patientId = String.valueOf(getIdFromToken.getId(context));
 
-        if(chat.getUserId1().equals(patientId)){
-            holder.chatName.setText("Doctor ID: " + chat.getUserId2());
-        }else{
-            holder.chatName.setText("Doctor ID: " + chat.getUserId1());
-        }
+
+            holder.chatName.setText(chat.getDoctorName()+" "+chat.getDoctorSurname());
+
         if (chat.getLastSenderId() == null) {
             holder.chatStatus.setText("Start Chat");
             holder.chatItemLayout.setBackgroundColor(Color.LTGRAY);

@@ -54,7 +54,7 @@ public class AppointmentsAdapter extends RecyclerView.Adapter<com.example.hospit
     public void onBindViewHolder(@NonNull com.example.hospital_managment.UserDashboard.Appointments.AppointmentsAdapter.ViewHolder holder, int position) {
         com.example.hospital_managment.UserDashboard.Appointments.AppointmentsModel appointments = appointmentsList.get(position);
 
-        holder.nameOfAppointments.setText("Doctor ID: " +appointments.getDoctorId());
+        holder.nameOfAppointments.setText("Doctor : " +appointments.getDoctorName()+" "+appointments.getDoctorSurname());
         holder.dateOfAppointments.setText(appointments.getLocalDate()+","+appointments.getLocalTime());
 
         if(appointments.getAppointemntStatus().equals("Approved")){

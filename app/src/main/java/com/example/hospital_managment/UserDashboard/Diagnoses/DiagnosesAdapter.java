@@ -47,7 +47,7 @@ public class DiagnosesAdapter extends RecyclerView.Adapter<com.example.hospital_
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         com.example.hospital_managment.UserDashboard.Diagnoses.DiagnosesModel diagnosis = diagnosesList.get(position);
-        holder.name.setText("Doctor ID: " + diagnosis.getDoctorId());
+        holder.name.setText("Doctor " + diagnosis.getDoctorName()+" "+diagnosis.getDoctorSurname());
         holder.description.setText(diagnosis.getDiagnosis());
 
 

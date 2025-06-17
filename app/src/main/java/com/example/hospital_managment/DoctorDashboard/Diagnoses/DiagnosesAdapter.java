@@ -46,7 +46,7 @@ public class DiagnosesAdapter extends RecyclerView.Adapter<DiagnosesAdapter.View
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         DiagnosesModel diagnosis = diagnosesList.get(position);
-        holder.name.setText("Doctor ID: " + diagnosis.getUserId());
+        holder.name.setText("Patient : " + diagnosis.getUserName()+" "+diagnosis.getUserSurname());
         holder.description.setText(diagnosis.getDiagnosis());
 
 
