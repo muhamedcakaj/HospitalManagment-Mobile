@@ -6,9 +6,11 @@ import android.view.Menu;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+
+import com.example.hospital_managment.DoctorDashboard.CreateDiagnoses.CreateDiagnosesView;
 import com.example.hospital_managment.UserDashboard.Appointments.AppointmentsView;
 import com.example.hospital_managment.UserDashboard.Chat.ChatView;
-import com.example.hospital_managment.DoctorDashboard.CreateDiagnoses.CreateDiagnosesView;
+import com.example.hospital_managment.UserDashboard.CreateAppointment.CreateAppointmentView;
 import com.example.hospital_managment.UserDashboard.Diagnoses.DiagnosesView;
 import com.example.hospital_managment.UserDashboard.Profile.ProfileView;
 import com.example.hospital_managment.R;
@@ -45,7 +47,7 @@ public class UserDashboard extends AppCompatActivity {
             int id = item.getItemId();
 
             if (id == R.id.nav_create_diagnoses) {
-                fragment = new CreateDiagnosesView();
+                fragment = new CreateAppointmentView();
             } else if (id == R.id.nav_appointments) {
                 fragment = new AppointmentsView();
             } else if (id == R.id.nav_chat) {
