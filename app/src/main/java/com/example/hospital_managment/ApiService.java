@@ -15,6 +15,7 @@ import com.example.hospital_managment.SignUp.SignUpModel;
 import com.example.hospital_managment.Token.RefreshToken.RefreshRequest;
 import com.example.hospital_managment.Token.RefreshToken.TokenResponse;
 import com.example.hospital_managment.UserDashboard.Chat.GetDoctorsDTO;
+import com.example.hospital_managment.UserDashboard.CreateAppointment.CreateAppointmentsModel;
 
 import java.util.List;
 
