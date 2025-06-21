@@ -1,13 +1,9 @@
 package com.example.hospital_managment.UserDashboard.CreateAppointment;
-
-import java.time.LocalDate;
-import java.time.LocalTime;
-
 public class AppointmentCreateDTO {
     private int doctorId;
     private int userId;
-    private LocalDate localDate;
-    private LocalTime localTime;
+    private String localDate;
+    private String localTime;
 
     public Integer getDoctorId() {
         return doctorId;
@@ -25,19 +21,19 @@ public class AppointmentCreateDTO {
         this.userId = userId;
     }
 
-    public LocalDate getLocalDate() {
+    public String getLocalDate() {
         return localDate;
     }
 
-    public void setLocalDate(LocalDate date) {
+    public void setLocalDate(String date) {
         this.localDate = date;
     }
 
-    public LocalTime getLocalTime() {
+    public String getLocalTime() {
         return localTime;
     }
 
-    public void setLocalTime(LocalTime time) {
+    public void setLocalTime(String time) {
         this.localTime = time;
     }
 }

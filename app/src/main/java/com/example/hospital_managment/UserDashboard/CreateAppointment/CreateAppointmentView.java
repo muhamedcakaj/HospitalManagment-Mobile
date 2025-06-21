@@ -97,6 +97,8 @@ public class CreateAppointmentView extends Fragment {
 
     private String setTime = null;
 
+    private TextView lastSelectedTimeView = null;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -143,7 +145,7 @@ public class CreateAppointmentView extends Fragment {
                 }
             }
 
-            generateAndDisplayTimeSlots(); // Refresh UI after collecting busy times
+            generateAndDisplayTimeSlots();
         });
 
         doctorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -158,7 +160,7 @@ public class CreateAppointmentView extends Fragment {
                     }
                 } else {
                     selectedDoctorId = null;
-                    timeSlotsGrid.removeAllViews(); // Clear time slots if no doctor is selected
+                    timeSlotsGrid.removeAllViews();
                 }
             }
 
@@ -167,12 +169,21 @@ public class CreateAppointmentView extends Fragment {
             }
         });
 
-        bookAppointentButton.setOnClickListener(v->{
-            if(selectedDoctorId != null&&selectedDateText!=null&&setTime!=null){
-                selectedDoctorId=null;
-                selectedDateText=null;
-                Toast.makeText(requireContext(), "The Appointment Added Successfully", Toast.LENGTH_SHORT).show();
-            }else{
+        bookAppointentButton.setOnClickListener(v -> {
+            if (selectedDoctorId != null && formattedDate != null && setTime != null) {
+                viewModel.bookAnAppointment(requireContext(), selectedDoctorId, setTime, formattedDate);
+                Toast.makeText(requireContext(), "Appointment Added Successfully", Toast.LENGTH_SHORT).show();
+
+                selectedDoctorId = null;
+                formattedDate = null;
+                setTime = null;
+                selectedDate = null;
+
+                doctorSpinner.setSelection(0);
+                selectedDateText.setText("Select Date");
+                timeSlotsGrid.removeAllViews();
+
+            } else {
                 Toast.makeText(requireContext(), "Please fill all the necessary fields", Toast.LENGTH_SHORT).show();
             }
         });
@@ -210,7 +221,7 @@ public class CreateAppointmentView extends Fragment {
     }
 
     private void generateAndDisplayTimeSlots() {
-        timeSlotsGrid.removeAllViews(); // Clear previous time slots
+        timeSlotsGrid.removeAllViews();
 
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
         Calendar calendar = Calendar.getInstance();
@@ -245,21 +256,27 @@ public class CreateAppointmentView extends Fragment {
         timeSlotTextView.setLayoutParams(params);
 
         if (busyTimes.contains(time)) {
-            // Mark red and disable
+
             timeSlotTextView.setBackgroundColor(Color.parseColor("#FFCCCC")); // light red
             timeSlotTextView.setTextColor(Color.RED);
             timeSlotTextView.setEnabled(false);
         } else {
-            // Available slot styling
             timeSlotTextView.setBackgroundResource(R.drawable.time_slot_background);
             timeSlotTextView.setTextColor(Color.BLACK);
             timeSlotTextView.setClickable(true);
             timeSlotTextView.setOnClickListener(v -> {
-                Toast.makeText(requireContext(), "Selected time: " + time, Toast.LENGTH_SHORT).show();
-                setTime=time;
+                setTime = time;
+                if (lastSelectedTimeView != null) {
+                    lastSelectedTimeView.setBackgroundResource(R.drawable.time_slot_background);
+                    lastSelectedTimeView.setTextColor(Color.BLACK);
+                }
+
+                timeSlotTextView.setBackgroundColor(Color.parseColor("#007BFF")); // Bootstrap Blue
+                timeSlotTextView.setTextColor(Color.WHITE);
+
+                lastSelectedTimeView = timeSlotTextView;
             });
         }
-
         timeSlotsGrid.addView(timeSlotTextView);
     }
 }

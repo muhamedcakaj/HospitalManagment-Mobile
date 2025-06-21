@@ -8,12 +8,16 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.hospital_managment.ApiService;
 import com.example.hospital_managment.DoctorDashboard.Appointments.AppointmentsModel;
+import com.example.hospital_managment.GetIdFromToken;
 import com.example.hospital_managment.Token.RetrofitInstance;
 import com.example.hospital_managment.UserDashboard.Chat.GetDoctorsDTO;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -65,6 +69,34 @@ public class CreateAppointmentViewModel extends ViewModel {
             @Override
             public void onFailure(@NonNull Call<List<AppointmentsModel>> call, @NonNull Throwable t) {
                 appointments.postValue(new ArrayList<>());
+            }
+        });
+    }
+
+    public void bookAnAppointment(Context context,int doctorId,String time,String date){
+        GetIdFromToken getIdFromToken = new GetIdFromToken();
+
+        AppointmentCreateDTO appointmentCreateDTO = new AppointmentCreateDTO();
+        appointmentCreateDTO.setUserId(getIdFromToken.getId(context));
+        appointmentCreateDTO.setDoctorId(doctorId);
+
+        appointmentCreateDTO.setLocalDate(date);
+        appointmentCreateDTO.setLocalTime(time + ":00");
+
+        ApiService apiService=RetrofitInstance.getApiService(context);
+
+        apiService.bookAnAppointment(appointmentCreateDTO).enqueue(new Callback<>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+                    System.out.println("Successfully added appointment");
+                }else{
+                    System.out.println("Appointment not added");
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                System.out.println("Appointment Failed to add");
             }
         });
     }

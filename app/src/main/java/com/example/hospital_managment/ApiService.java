@@ -15,6 +15,7 @@ import com.example.hospital_managment.SignUp.SignUpModel;
 import com.example.hospital_managment.Token.RefreshToken.RefreshRequest;
 import com.example.hospital_managment.Token.RefreshToken.TokenResponse;
 import com.example.hospital_managment.UserDashboard.Chat.GetDoctorsDTO;
+import com.example.hospital_managment.UserDashboard.CreateAppointment.AppointmentCreateDTO;
 import com.example.hospital_managment.UserDashboard.CreateAppointment.CreateAppointmentsModel;
 
 import java.util.List;
@@ -83,12 +84,14 @@ public interface ApiService {
     @PUT("users/{id}")
     Call<ResponseBody>updatePersonalInfoOfPatient(@Path("id")int id, @Body com.example.hospital_managment.UserDashboard.Profile.ProfileModel profileModel);
 
+    @POST("appointments")
+    Call<ResponseBody>bookAnAppointment(@Body AppointmentCreateDTO appointmentCreateDTO);
+
     //Push Notifications Api-s
     @PUT("auth/addFcmToken/{id}")
     Call<ResponseBody>addRefreshFcmTokenDto(@Path("id")int id, @Body FcmTokenDTO fcmTokenDTO);
 
     //Delete FcmToken API
-
     @PUT("auth/deleteFcmToken/{id}")
     Call<ResponseBody>deleteFcmTokenFromUser(@Path("id")int id);
 }
